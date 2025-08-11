@@ -15,3 +15,4 @@ contexto-de-los-datos
 extracción-transformación-y-carga-etl
 ánálisis-de-la-variable-objetivo-death_event
 análisis-de-las-variables-características-independientes
+análisis-exploratorio-bivariado
