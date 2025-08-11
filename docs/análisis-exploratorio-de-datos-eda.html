@@ -615,7 +615,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="análisis-exploratorio-bivariado" class="section level2 hasAnchor" number="3.5">
 <h2><span class="header-section-number">3.5</span> Análisis exploratorio bivariado<a href="#an%C3%A1lisis-exploratorio-bivariado" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Compararemos la variable <code>DEATH_EVENT</code> con las variables numéricas independientes.</p>
+<p>Compararemos la variable <code>DEATH_EVENT</code> con las variables numéricas independientes:</p>
 <div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="análisis-exploratorio-de-datos-eda.html#cb32-1" tabindex="-1"></a><span class="co"># Diagrama caja y bigotes: DEATH_EVENT / Edad</span></span>
 <span id="cb32-2"><a href="análisis-exploratorio-de-datos-eda.html#cb32-2" tabindex="-1"></a><span class="fu">ggplot</span>(datos, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(DEATH_EVENT), <span class="at">y =</span> age)) <span class="sc">+</span></span>
 <span id="cb32-3"><a href="análisis-exploratorio-de-datos-eda.html#cb32-3" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="st">&quot;orange&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
