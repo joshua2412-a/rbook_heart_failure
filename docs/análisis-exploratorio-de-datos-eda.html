@@ -31,7 +31,7 @@
   
   
 <link rel="prev" href="intro.html"/>
-<link rel="next" href="methods.html"/>
+<link rel="next" href="references.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -146,18 +146,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="3.1" data-path="análisis-exploratorio-de-datos-eda.html"><a href="análisis-exploratorio-de-datos-eda.html"><i class="fa fa-check"></i><b>3.1</b> Contexto de los datos</a></li>
 <li class="chapter" data-level="3.2" data-path="02-literature.html"><a href="#extracci%C3%B3n-transformaci%C3%B3n-y-carga-etl"><i class="fa fa-check"></i><b>3.2</b> Extracción, transformación y carga (ETL)</a></li>
-<li class="chapter" data-level="3.3" data-path="02-literature.html"><a href="#%C3%A1n%C3%A1lisis-de-la-variable-objetivo-death_event"><i class="fa fa-check"></i><b>3.3</b> Ánálisis de la variable objetivo: DEATH_EVENT</a></li>
+<li class="chapter" data-level="3.3" data-path="02-literature.html"><a href="#%C3%A1n%C3%A1lisis-de-la-variable-objetivo-death_event"><i class="fa fa-check"></i><b>3.3</b> Ánálisis de la variable objetivo: <code>DEATH_EVENT</code></a></li>
+<li class="chapter" data-level="3.4" data-path="02-literature.html"><a href="#an%C3%A1lisis-de-las-variables-caracter%C3%ADsticas-independientes"><i class="fa fa-check"></i><b>3.4</b> Análisis de las variables características (independientes)</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="methods.html"><a href="methods.html"><i class="fa fa-check"></i><b>4</b> Methods</a>
-<ul>
-<li class="chapter" data-level="4.1" data-path="methods.html"><a href="methods.html#math-example"><i class="fa fa-check"></i><b>4.1</b> math example</a></li>
-</ul></li>
-<li class="chapter" data-level="5" data-path="applications.html"><a href="applications.html"><i class="fa fa-check"></i><b>5</b> Applications</a>
-<ul>
-<li class="chapter" data-level="5.1" data-path="applications.html"><a href="applications.html#example-one"><i class="fa fa-check"></i><b>5.1</b> Example one</a></li>
-<li class="chapter" data-level="5.2" data-path="applications.html"><a href="applications.html#example-two"><i class="fa fa-check"></i><b>5.2</b> Example two</a></li>
-</ul></li>
-<li class="chapter" data-level="6" data-path="final-words.html"><a href="final-words.html"><i class="fa fa-check"></i><b>6</b> Final Words</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -312,7 +303,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Como se observa en el gráfico no se presentan datos faltantes en el dataset.</p>
 </div>
 <div id="ánálisis-de-la-variable-objetivo-death_event" class="section level2 hasAnchor" number="3.3">
-<h2><span class="header-section-number">3.3</span> Ánálisis de la variable objetivo: DEATH_EVENT<a href="#%C3%A1n%C3%A1lisis-de-la-variable-objetivo-death_event" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<h2><span class="header-section-number">3.3</span> Ánálisis de la variable objetivo: <code>DEATH_EVENT</code><a href="#%C3%A1n%C3%A1lisis-de-la-variable-objetivo-death_event" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <ul>
 <li>Resumen de la variable:</li>
 </ul>
@@ -324,7 +315,68 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##         &lt;dbl&gt; &lt;int&gt;      &lt;dbl&gt;
 ## 1           0   203      0.679
 ## 2           1    96      0.321</code></pre>
-<p>Los carros</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="análisis-exploratorio-de-datos-eda.html#cb21-1" tabindex="-1"></a>datos <span class="sc">%&gt;%</span> </span>
+<span id="cb21-2"><a href="análisis-exploratorio-de-datos-eda.html#cb21-2" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb21-3"><a href="análisis-exploratorio-de-datos-eda.html#cb21-3" tabindex="-1"></a>    <span class="at">total_registros =</span> <span class="fu">n</span>(),</span>
+<span id="cb21-4"><a href="análisis-exploratorio-de-datos-eda.html#cb21-4" tabindex="-1"></a>    <span class="at">total_muertes =</span> <span class="fu">sum</span>(DEATH_EVENT <span class="sc">==</span> <span class="dv">1</span>),</span>
+<span id="cb21-5"><a href="análisis-exploratorio-de-datos-eda.html#cb21-5" tabindex="-1"></a>    <span class="at">total_sobrevivientes =</span> <span class="fu">sum</span>(DEATH_EVENT <span class="sc">==</span> <span class="dv">0</span>),</span>
+<span id="cb21-6"><a href="análisis-exploratorio-de-datos-eda.html#cb21-6" tabindex="-1"></a>    <span class="at">prop_muertes =</span> <span class="fu">mean</span>(DEATH_EVENT),</span>
+<span id="cb21-7"><a href="análisis-exploratorio-de-datos-eda.html#cb21-7" tabindex="-1"></a>    <span class="at">prop_sobrevivientes =</span> <span class="dv">1</span> <span class="sc">-</span> <span class="fu">mean</span>(DEATH_EVENT))</span></code></pre></div>
+<pre><code>## # A tibble: 1 × 5
+##   total_registros total_muertes total_sobrevivientes prop_muertes
+##             &lt;int&gt;         &lt;int&gt;                &lt;int&gt;        &lt;dbl&gt;
+## 1             299            96                  203        0.321
+## # ℹ 1 more variable: prop_sobrevivientes &lt;dbl&gt;</code></pre>
+<p>La variable <code>DEATH_EVENT</code> representa la mortalidad de los pacientes, indicando si el paciente murió (<code>1</code>) o no (<code>0</code>). De un total de <strong>299</strong> observaciones, el <strong>67,89%</strong> de los pacientes sobrevivieron <strong>(<span class="math inline">\(n = 203\)</span>)</strong>, mientras que el <strong>32,1%</strong> murieron <strong>(<span class="math inline">\(n = 96\)</span>)</strong>. Esta distribución de los datos está moderadamente desbalanceada, lo que sugiere que hay más casos de no fallecimiento que de fallecimiento, pero no es un desequilibrio extremo. Sin embargo, a nivel clínico la proporción del <strong>32%</strong> de defunciones es alta en comparación con la población general, lo que podría deberse a que los datos provienen de una población de alto riesgo.</p>
+<ul>
+<li>Diagrama de barras</li>
+</ul>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="análisis-exploratorio-de-datos-eda.html#cb23-1" tabindex="-1"></a>tabla_smoking <span class="ot">&lt;-</span> datos <span class="sc">%&gt;%</span></span>
+<span id="cb23-2"><a href="análisis-exploratorio-de-datos-eda.html#cb23-2" tabindex="-1"></a>  <span class="fu">count</span>(smoking, <span class="at">name =</span> <span class="st">&quot;Pacientes&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb23-3"><a href="análisis-exploratorio-de-datos-eda.html#cb23-3" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb23-4"><a href="análisis-exploratorio-de-datos-eda.html#cb23-4" tabindex="-1"></a>    <span class="at">Porcentaje =</span> <span class="fu">round</span>(Pacientes <span class="sc">/</span> <span class="fu">sum</span>(Pacientes) <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">1</span>),</span>
+<span id="cb23-5"><a href="análisis-exploratorio-de-datos-eda.html#cb23-5" tabindex="-1"></a>    <span class="at">Etiqueta =</span> <span class="fu">paste0</span>(Pacientes, <span class="st">&quot; (&quot;</span>, Porcentaje, <span class="st">&quot;%)&quot;</span>))</span>
+<span id="cb23-6"><a href="análisis-exploratorio-de-datos-eda.html#cb23-6" tabindex="-1"></a></span>
+<span id="cb23-7"><a href="análisis-exploratorio-de-datos-eda.html#cb23-7" tabindex="-1"></a>tabla_smoking <span class="sc">%&gt;%</span> </span>
+<span id="cb23-8"><a href="análisis-exploratorio-de-datos-eda.html#cb23-8" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(smoking), <span class="at">y =</span> Pacientes)) <span class="sc">+</span></span>
+<span id="cb23-9"><a href="análisis-exploratorio-de-datos-eda.html#cb23-9" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">fill =</span> <span class="st">&quot;#008B8B&quot;</span>, <span class="at">width =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb23-10"><a href="análisis-exploratorio-de-datos-eda.html#cb23-10" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> Etiqueta), <span class="at">vjust =</span> <span class="sc">-</span><span class="fl">0.5</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb23-11"><a href="análisis-exploratorio-de-datos-eda.html#cb23-11" tabindex="-1"></a>  <span class="fu">facet_grid</span>(<span class="sc">~</span> <span class="st">&quot;Diagrama de barras de pacientes&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb23-12"><a href="análisis-exploratorio-de-datos-eda.html#cb23-12" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.15</span>))) <span class="sc">+</span></span>
+<span id="cb23-13"><a href="análisis-exploratorio-de-datos-eda.html#cb23-13" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Pacientes&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Numero de pacientes (Porcentaje)&quot;</span>)</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<ul>
+<li>Gráficos</li>
+</ul>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="análisis-exploratorio-de-datos-eda.html#cb24-1" tabindex="-1"></a>datos <span class="sc">%&gt;%</span></span>
+<span id="cb24-2"><a href="análisis-exploratorio-de-datos-eda.html#cb24-2" tabindex="-1"></a>  <span class="fu">count</span>(DEATH_EVENT) <span class="sc">%&gt;%</span></span>
+<span id="cb24-3"><a href="análisis-exploratorio-de-datos-eda.html#cb24-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="st">&quot;&quot;</span>, <span class="at">y =</span> n, <span class="at">fill =</span> <span class="fu">factor</span>(DEATH_EVENT))) <span class="sc">+</span></span>
+<span id="cb24-4"><a href="análisis-exploratorio-de-datos-eda.html#cb24-4" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb24-5"><a href="análisis-exploratorio-de-datos-eda.html#cb24-5" tabindex="-1"></a>  <span class="fu">coord_polar</span>(<span class="at">theta =</span> <span class="st">&quot;y&quot;</span>) <span class="sc">+</span></span>
+<span id="cb24-6"><a href="análisis-exploratorio-de-datos-eda.html#cb24-6" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">fill =</span> <span class="st">&quot;DEATH_EVENT&quot;</span>, <span class="at">title =</span> <span class="st">&quot;Proporcion de muertes y sobrevivientes&quot;</span>) <span class="sc">+</span></span>
+<span id="cb24-7"><a href="análisis-exploratorio-de-datos-eda.html#cb24-7" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;skyblue&quot;</span>, <span class="st">&quot;tomato&quot;</span>),</span>
+<span id="cb24-8"><a href="análisis-exploratorio-de-datos-eda.html#cb24-8" tabindex="-1"></a>                    <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;0&quot;</span> <span class="ot">=</span> <span class="st">&quot;Sobreviviente&quot;</span>, <span class="st">&quot;1&quot;</span> <span class="ot">=</span> <span class="st">&quot;Muerte&quot;</span>))</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="análisis-exploratorio-de-datos-eda.html#cb25-1" tabindex="-1"></a><span class="fu">ggplot</span>(datos, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(DEATH_EVENT), <span class="at">y =</span> age)) <span class="sc">+</span></span>
+<span id="cb25-2"><a href="análisis-exploratorio-de-datos-eda.html#cb25-2" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="st">&quot;orange&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb25-3"><a href="análisis-exploratorio-de-datos-eda.html#cb25-3" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb25-4"><a href="análisis-exploratorio-de-datos-eda.html#cb25-4" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Muerte (1 = si, 0 = no)&quot;</span>,</span>
+<span id="cb25-5"><a href="análisis-exploratorio-de-datos-eda.html#cb25-5" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Edad&quot;</span>,</span>
+<span id="cb25-6"><a href="análisis-exploratorio-de-datos-eda.html#cb25-6" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Distribucion de edad segun muerte&quot;</span>)</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="análisis-exploratorio-de-datos-eda.html#cb26-1" tabindex="-1"></a><span class="fu">ggplot</span>(datos, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(DEATH_EVENT), <span class="at">y =</span> ejection_fraction)) <span class="sc">+</span></span>
+<span id="cb26-2"><a href="análisis-exploratorio-de-datos-eda.html#cb26-2" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="st">&quot;tomato&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb26-3"><a href="análisis-exploratorio-de-datos-eda.html#cb26-3" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb26-4"><a href="análisis-exploratorio-de-datos-eda.html#cb26-4" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Muerte (1 = si, 0 = no)&quot;</span>,</span>
+<span id="cb26-5"><a href="análisis-exploratorio-de-datos-eda.html#cb26-5" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Fraccion de eyeccion&quot;</span>,</span>
+<span id="cb26-6"><a href="análisis-exploratorio-de-datos-eda.html#cb26-6" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Fraccion de eyeccion segun muerte&quot;</span>)</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+</div>
+<div id="análisis-de-las-variables-características-independientes" class="section level2 hasAnchor" number="3.4">
+<h2><span class="header-section-number">3.4</span> Análisis de las variables características (independientes)<a href="#an%C3%A1lisis-de-las-variables-caracter%C3%ADsticas-independientes" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li>Resumen de las variables numéricas:</li>
+</ul>
 
 </div>
 </div>
@@ -334,7 +386,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
         </div>
       </div>
 <a href="intro.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="methods.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
