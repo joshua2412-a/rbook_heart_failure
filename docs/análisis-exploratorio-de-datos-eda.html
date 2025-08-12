@@ -23,7 +23,7 @@
 <meta name="author" content="Alejandro Cantillo, Joshua Hincapie y Rafael Romero." />
 
 
-<meta name="date" content="2025-08-11" />
+<meta name="date" content="2025-08-12" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -615,101 +615,530 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  8 Sexo                 1        194       64.9
 ##  9 Smoking              0        203       67.9
 ## 10 Smoking              1         96       32.1</code></pre>
+<ul>
+<li>Gráficos</li>
+</ul>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="análisis-exploratorio-de-datos-eda.html#cb32-1" tabindex="-1"></a>tabla__anaemia <span class="ot">&lt;-</span> datos <span class="sc">%&gt;%</span></span>
+<span id="cb32-2"><a href="análisis-exploratorio-de-datos-eda.html#cb32-2" tabindex="-1"></a>  <span class="fu">count</span>(anaemia, <span class="at">name =</span> <span class="st">&quot;Frecuencia&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb32-3"><a href="análisis-exploratorio-de-datos-eda.html#cb32-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Porcentaje =</span> <span class="fu">round</span>(Frecuencia <span class="sc">/</span> <span class="fu">sum</span>(Frecuencia) <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">1</span>),</span>
+<span id="cb32-4"><a href="análisis-exploratorio-de-datos-eda.html#cb32-4" tabindex="-1"></a>         <span class="at">Etiqueta =</span> <span class="fu">paste0</span>(Frecuencia, <span class="st">&quot; (&quot;</span>, Porcentaje, <span class="st">&quot;%)&quot;</span>))</span>
+<span id="cb32-5"><a href="análisis-exploratorio-de-datos-eda.html#cb32-5" tabindex="-1"></a></span>
+<span id="cb32-6"><a href="análisis-exploratorio-de-datos-eda.html#cb32-6" tabindex="-1"></a>tabla__anaemia <span class="sc">%&gt;%</span> </span>
+<span id="cb32-7"><a href="análisis-exploratorio-de-datos-eda.html#cb32-7" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> anaemia, <span class="at">y =</span> Frecuencia)) <span class="sc">+</span></span>
+<span id="cb32-8"><a href="análisis-exploratorio-de-datos-eda.html#cb32-8" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">fill =</span> <span class="st">&quot;#008B8B&quot;</span>, <span class="at">width =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb32-9"><a href="análisis-exploratorio-de-datos-eda.html#cb32-9" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> Etiqueta), <span class="at">vjust =</span> <span class="sc">-</span><span class="fl">0.5</span>, <span class="at">size =</span> <span class="dv">5</span>) <span class="sc">+</span></span>
+<span id="cb32-10"><a href="análisis-exploratorio-de-datos-eda.html#cb32-10" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> <span class="st">&quot;Distribución de la variable anaemia&quot;</span>) <span class="sc">+</span></span>
+<span id="cb32-11"><a href="análisis-exploratorio-de-datos-eda.html#cb32-11" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.15</span>))) <span class="sc">+</span></span>
+<span id="cb32-12"><a href="análisis-exploratorio-de-datos-eda.html#cb32-12" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Pacientes con anemia&quot;</span>, </span>
+<span id="cb32-13"><a href="análisis-exploratorio-de-datos-eda.html#cb32-13" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Frecuencia (Porcentaje)&quot;</span>) <span class="sc">+</span></span>
+<span id="cb32-14"><a href="análisis-exploratorio-de-datos-eda.html#cb32-14" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">14</span>) <span class="sc">+</span></span>
+<span id="cb32-15"><a href="análisis-exploratorio-de-datos-eda.html#cb32-15" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb32-16"><a href="análisis-exploratorio-de-datos-eda.html#cb32-16" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb32-17"><a href="análisis-exploratorio-de-datos-eda.html#cb32-17" tabindex="-1"></a>    <span class="at">strip.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">&quot;gray80&quot;</span>, <span class="at">color =</span> <span class="cn">NA</span>),</span>
+<span id="cb32-18"><a href="análisis-exploratorio-de-datos-eda.html#cb32-18" tabindex="-1"></a>    <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">&quot;bold&quot;</span>),</span>
+<span id="cb32-19"><a href="análisis-exploratorio-de-datos-eda.html#cb32-19" tabindex="-1"></a>    <span class="at">panel.grid.major.x =</span> <span class="fu">element_blank</span>())</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="análisis-exploratorio-de-datos-eda.html#cb33-1" tabindex="-1"></a>tabla__diabetes <span class="ot">&lt;-</span> datos <span class="sc">%&gt;%</span></span>
+<span id="cb33-2"><a href="análisis-exploratorio-de-datos-eda.html#cb33-2" tabindex="-1"></a>  <span class="fu">count</span>(diabetes, <span class="at">name =</span> <span class="st">&quot;Frecuencia&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb33-3"><a href="análisis-exploratorio-de-datos-eda.html#cb33-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Porcentaje =</span> <span class="fu">round</span>(Frecuencia <span class="sc">/</span> <span class="fu">sum</span>(Frecuencia) <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">1</span>),</span>
+<span id="cb33-4"><a href="análisis-exploratorio-de-datos-eda.html#cb33-4" tabindex="-1"></a>         <span class="at">Etiqueta =</span> <span class="fu">paste0</span>(Frecuencia, <span class="st">&quot; (&quot;</span>, Porcentaje, <span class="st">&quot;%)&quot;</span>))</span>
+<span id="cb33-5"><a href="análisis-exploratorio-de-datos-eda.html#cb33-5" tabindex="-1"></a></span>
+<span id="cb33-6"><a href="análisis-exploratorio-de-datos-eda.html#cb33-6" tabindex="-1"></a>tabla__diabetes <span class="sc">%&gt;%</span> </span>
+<span id="cb33-7"><a href="análisis-exploratorio-de-datos-eda.html#cb33-7" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> diabetes, <span class="at">y =</span> Frecuencia)) <span class="sc">+</span></span>
+<span id="cb33-8"><a href="análisis-exploratorio-de-datos-eda.html#cb33-8" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">fill =</span> <span class="st">&quot;#008B8B&quot;</span>, <span class="at">width =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb33-9"><a href="análisis-exploratorio-de-datos-eda.html#cb33-9" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> Etiqueta), <span class="at">vjust =</span> <span class="sc">-</span><span class="fl">0.5</span>, <span class="at">size =</span> <span class="dv">5</span>) <span class="sc">+</span></span>
+<span id="cb33-10"><a href="análisis-exploratorio-de-datos-eda.html#cb33-10" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> <span class="st">&quot;Distribución de la variable diabetes&quot;</span>) <span class="sc">+</span></span>
+<span id="cb33-11"><a href="análisis-exploratorio-de-datos-eda.html#cb33-11" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.15</span>))) <span class="sc">+</span></span>
+<span id="cb33-12"><a href="análisis-exploratorio-de-datos-eda.html#cb33-12" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Pacientes con diabetes&quot;</span>, </span>
+<span id="cb33-13"><a href="análisis-exploratorio-de-datos-eda.html#cb33-13" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Frecuencia (Porcentaje)&quot;</span>) <span class="sc">+</span></span>
+<span id="cb33-14"><a href="análisis-exploratorio-de-datos-eda.html#cb33-14" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">14</span>) <span class="sc">+</span></span>
+<span id="cb33-15"><a href="análisis-exploratorio-de-datos-eda.html#cb33-15" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb33-16"><a href="análisis-exploratorio-de-datos-eda.html#cb33-16" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb33-17"><a href="análisis-exploratorio-de-datos-eda.html#cb33-17" tabindex="-1"></a>    <span class="at">strip.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">&quot;gray80&quot;</span>, <span class="at">color =</span> <span class="cn">NA</span>),</span>
+<span id="cb33-18"><a href="análisis-exploratorio-de-datos-eda.html#cb33-18" tabindex="-1"></a>    <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">&quot;bold&quot;</span>),</span>
+<span id="cb33-19"><a href="análisis-exploratorio-de-datos-eda.html#cb33-19" tabindex="-1"></a>    <span class="at">panel.grid.major.x =</span> <span class="fu">element_blank</span>())</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="análisis-exploratorio-de-datos-eda.html#cb34-1" tabindex="-1"></a>tabla__hbp <span class="ot">&lt;-</span> datos <span class="sc">%&gt;%</span></span>
+<span id="cb34-2"><a href="análisis-exploratorio-de-datos-eda.html#cb34-2" tabindex="-1"></a>  <span class="fu">count</span>(high_blood_pressure, <span class="at">name =</span> <span class="st">&quot;Frecuencia&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb34-3"><a href="análisis-exploratorio-de-datos-eda.html#cb34-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Porcentaje =</span> <span class="fu">round</span>(Frecuencia <span class="sc">/</span> <span class="fu">sum</span>(Frecuencia) <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">1</span>),</span>
+<span id="cb34-4"><a href="análisis-exploratorio-de-datos-eda.html#cb34-4" tabindex="-1"></a>         <span class="at">Etiqueta =</span> <span class="fu">paste0</span>(Frecuencia, <span class="st">&quot; (&quot;</span>, Porcentaje, <span class="st">&quot;%)&quot;</span>))</span>
+<span id="cb34-5"><a href="análisis-exploratorio-de-datos-eda.html#cb34-5" tabindex="-1"></a></span>
+<span id="cb34-6"><a href="análisis-exploratorio-de-datos-eda.html#cb34-6" tabindex="-1"></a>tabla__hbp <span class="sc">%&gt;%</span> </span>
+<span id="cb34-7"><a href="análisis-exploratorio-de-datos-eda.html#cb34-7" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> high_blood_pressure, <span class="at">y =</span> Frecuencia)) <span class="sc">+</span></span>
+<span id="cb34-8"><a href="análisis-exploratorio-de-datos-eda.html#cb34-8" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">fill =</span> <span class="st">&quot;#008B8B&quot;</span>, <span class="at">width =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb34-9"><a href="análisis-exploratorio-de-datos-eda.html#cb34-9" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> Etiqueta), <span class="at">vjust =</span> <span class="sc">-</span><span class="fl">0.5</span>, <span class="at">size =</span> <span class="dv">5</span>) <span class="sc">+</span></span>
+<span id="cb34-10"><a href="análisis-exploratorio-de-datos-eda.html#cb34-10" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> <span class="st">&quot;Distribución de la variable presión&quot;</span>) <span class="sc">+</span></span>
+<span id="cb34-11"><a href="análisis-exploratorio-de-datos-eda.html#cb34-11" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.15</span>))) <span class="sc">+</span></span>
+<span id="cb34-12"><a href="análisis-exploratorio-de-datos-eda.html#cb34-12" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Pacientes con presión alta&quot;</span>, </span>
+<span id="cb34-13"><a href="análisis-exploratorio-de-datos-eda.html#cb34-13" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Frecuencia (Porcentaje)&quot;</span>) <span class="sc">+</span></span>
+<span id="cb34-14"><a href="análisis-exploratorio-de-datos-eda.html#cb34-14" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">14</span>) <span class="sc">+</span></span>
+<span id="cb34-15"><a href="análisis-exploratorio-de-datos-eda.html#cb34-15" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb34-16"><a href="análisis-exploratorio-de-datos-eda.html#cb34-16" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb34-17"><a href="análisis-exploratorio-de-datos-eda.html#cb34-17" tabindex="-1"></a>    <span class="at">strip.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">&quot;gray80&quot;</span>, <span class="at">color =</span> <span class="cn">NA</span>),</span>
+<span id="cb34-18"><a href="análisis-exploratorio-de-datos-eda.html#cb34-18" tabindex="-1"></a>    <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">&quot;bold&quot;</span>),</span>
+<span id="cb34-19"><a href="análisis-exploratorio-de-datos-eda.html#cb34-19" tabindex="-1"></a>    <span class="at">panel.grid.major.x =</span> <span class="fu">element_blank</span>())</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="análisis-exploratorio-de-datos-eda.html#cb35-1" tabindex="-1"></a>tabla__sexo <span class="ot">&lt;-</span> datos <span class="sc">%&gt;%</span></span>
+<span id="cb35-2"><a href="análisis-exploratorio-de-datos-eda.html#cb35-2" tabindex="-1"></a>  <span class="fu">count</span>(sex, <span class="at">name =</span> <span class="st">&quot;Frecuencia&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb35-3"><a href="análisis-exploratorio-de-datos-eda.html#cb35-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Porcentaje =</span> <span class="fu">round</span>(Frecuencia <span class="sc">/</span> <span class="fu">sum</span>(Frecuencia) <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">1</span>),</span>
+<span id="cb35-4"><a href="análisis-exploratorio-de-datos-eda.html#cb35-4" tabindex="-1"></a>         <span class="at">Etiqueta =</span> <span class="fu">paste0</span>(Frecuencia, <span class="st">&quot; (&quot;</span>, Porcentaje, <span class="st">&quot;%)&quot;</span>))</span>
+<span id="cb35-5"><a href="análisis-exploratorio-de-datos-eda.html#cb35-5" tabindex="-1"></a></span>
+<span id="cb35-6"><a href="análisis-exploratorio-de-datos-eda.html#cb35-6" tabindex="-1"></a>tabla__sexo <span class="sc">%&gt;%</span> </span>
+<span id="cb35-7"><a href="análisis-exploratorio-de-datos-eda.html#cb35-7" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> sex, <span class="at">y =</span> Frecuencia)) <span class="sc">+</span></span>
+<span id="cb35-8"><a href="análisis-exploratorio-de-datos-eda.html#cb35-8" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">fill =</span> <span class="st">&quot;#008B8B&quot;</span>, <span class="at">width =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb35-9"><a href="análisis-exploratorio-de-datos-eda.html#cb35-9" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> Etiqueta), <span class="at">vjust =</span> <span class="sc">-</span><span class="fl">0.5</span>, <span class="at">size =</span> <span class="dv">5</span>) <span class="sc">+</span></span>
+<span id="cb35-10"><a href="análisis-exploratorio-de-datos-eda.html#cb35-10" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> <span class="st">&quot;Distribución de la variable sexo&quot;</span>) <span class="sc">+</span></span>
+<span id="cb35-11"><a href="análisis-exploratorio-de-datos-eda.html#cb35-11" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.15</span>))) <span class="sc">+</span></span>
+<span id="cb35-12"><a href="análisis-exploratorio-de-datos-eda.html#cb35-12" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Sexo de pacientes&quot;</span>, </span>
+<span id="cb35-13"><a href="análisis-exploratorio-de-datos-eda.html#cb35-13" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Frecuencia (Porcentaje)&quot;</span>) <span class="sc">+</span></span>
+<span id="cb35-14"><a href="análisis-exploratorio-de-datos-eda.html#cb35-14" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">14</span>) <span class="sc">+</span></span>
+<span id="cb35-15"><a href="análisis-exploratorio-de-datos-eda.html#cb35-15" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb35-16"><a href="análisis-exploratorio-de-datos-eda.html#cb35-16" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb35-17"><a href="análisis-exploratorio-de-datos-eda.html#cb35-17" tabindex="-1"></a>    <span class="at">strip.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">&quot;gray80&quot;</span>, <span class="at">color =</span> <span class="cn">NA</span>),</span>
+<span id="cb35-18"><a href="análisis-exploratorio-de-datos-eda.html#cb35-18" tabindex="-1"></a>    <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">&quot;bold&quot;</span>),</span>
+<span id="cb35-19"><a href="análisis-exploratorio-de-datos-eda.html#cb35-19" tabindex="-1"></a>    <span class="at">panel.grid.major.x =</span> <span class="fu">element_blank</span>())</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="análisis-exploratorio-de-datos-eda.html#cb36-1" tabindex="-1"></a>tabla__smoking <span class="ot">&lt;-</span> datos <span class="sc">%&gt;%</span></span>
+<span id="cb36-2"><a href="análisis-exploratorio-de-datos-eda.html#cb36-2" tabindex="-1"></a>  <span class="fu">count</span>(smoking, <span class="at">name =</span> <span class="st">&quot;Frecuencia&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb36-3"><a href="análisis-exploratorio-de-datos-eda.html#cb36-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Porcentaje =</span> <span class="fu">round</span>(Frecuencia <span class="sc">/</span> <span class="fu">sum</span>(Frecuencia) <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">1</span>),</span>
+<span id="cb36-4"><a href="análisis-exploratorio-de-datos-eda.html#cb36-4" tabindex="-1"></a>         <span class="at">Etiqueta =</span> <span class="fu">paste0</span>(Frecuencia, <span class="st">&quot; (&quot;</span>, Porcentaje, <span class="st">&quot;%)&quot;</span>))</span>
+<span id="cb36-5"><a href="análisis-exploratorio-de-datos-eda.html#cb36-5" tabindex="-1"></a></span>
+<span id="cb36-6"><a href="análisis-exploratorio-de-datos-eda.html#cb36-6" tabindex="-1"></a>tabla__smoking <span class="sc">%&gt;%</span> </span>
+<span id="cb36-7"><a href="análisis-exploratorio-de-datos-eda.html#cb36-7" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> smoking, <span class="at">y =</span> Frecuencia)) <span class="sc">+</span></span>
+<span id="cb36-8"><a href="análisis-exploratorio-de-datos-eda.html#cb36-8" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">fill =</span> <span class="st">&quot;#008B8B&quot;</span>, <span class="at">width =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb36-9"><a href="análisis-exploratorio-de-datos-eda.html#cb36-9" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> Etiqueta), <span class="at">vjust =</span> <span class="sc">-</span><span class="fl">0.5</span>, <span class="at">size =</span> <span class="dv">5</span>) <span class="sc">+</span></span>
+<span id="cb36-10"><a href="análisis-exploratorio-de-datos-eda.html#cb36-10" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> <span class="st">&quot;Distribución de la variable smoking&quot;</span>) <span class="sc">+</span></span>
+<span id="cb36-11"><a href="análisis-exploratorio-de-datos-eda.html#cb36-11" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.15</span>))) <span class="sc">+</span></span>
+<span id="cb36-12"><a href="análisis-exploratorio-de-datos-eda.html#cb36-12" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Pacientes fumadores&quot;</span>, </span>
+<span id="cb36-13"><a href="análisis-exploratorio-de-datos-eda.html#cb36-13" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Frecuencia (Porcentaje)&quot;</span>) <span class="sc">+</span></span>
+<span id="cb36-14"><a href="análisis-exploratorio-de-datos-eda.html#cb36-14" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">14</span>) <span class="sc">+</span></span>
+<span id="cb36-15"><a href="análisis-exploratorio-de-datos-eda.html#cb36-15" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb36-16"><a href="análisis-exploratorio-de-datos-eda.html#cb36-16" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb36-17"><a href="análisis-exploratorio-de-datos-eda.html#cb36-17" tabindex="-1"></a>    <span class="at">strip.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">&quot;gray80&quot;</span>, <span class="at">color =</span> <span class="cn">NA</span>),</span>
+<span id="cb36-18"><a href="análisis-exploratorio-de-datos-eda.html#cb36-18" tabindex="-1"></a>    <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">&quot;bold&quot;</span>),</span>
+<span id="cb36-19"><a href="análisis-exploratorio-de-datos-eda.html#cb36-19" tabindex="-1"></a>    <span class="at">panel.grid.major.x =</span> <span class="fu">element_blank</span>())</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
 </div>
 <div id="análisis-exploratorio-bivariado" class="section level2 hasAnchor" number="3.5">
 <h2><span class="header-section-number">3.5</span> Análisis exploratorio bivariado<a href="#an%C3%A1lisis-exploratorio-bivariado" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Compararemos la variable <code>DEATH_EVENT</code> con las variables numéricas independientes:</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="análisis-exploratorio-de-datos-eda.html#cb32-1" tabindex="-1"></a><span class="co"># Diagrama caja y bigotes: DEATH_EVENT / Edad</span></span>
-<span id="cb32-2"><a href="análisis-exploratorio-de-datos-eda.html#cb32-2" tabindex="-1"></a><span class="fu">ggplot</span>(datos, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(DEATH_EVENT), <span class="at">y =</span> age)) <span class="sc">+</span></span>
-<span id="cb32-3"><a href="análisis-exploratorio-de-datos-eda.html#cb32-3" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="st">&quot;orange&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
-<span id="cb32-4"><a href="análisis-exploratorio-de-datos-eda.html#cb32-4" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb32-5"><a href="análisis-exploratorio-de-datos-eda.html#cb32-5" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Muerte (1 = sí, 0 = no)&quot;</span>,</span>
-<span id="cb32-6"><a href="análisis-exploratorio-de-datos-eda.html#cb32-6" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Edad&quot;</span>,</span>
-<span id="cb32-7"><a href="análisis-exploratorio-de-datos-eda.html#cb32-7" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Distribución de edad según muerte&quot;</span>) <span class="sc">+</span></span>
-<span id="cb32-8"><a href="análisis-exploratorio-de-datos-eda.html#cb32-8" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb32-9"><a href="análisis-exploratorio-de-datos-eda.html#cb32-9" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb32-10"><a href="análisis-exploratorio-de-datos-eda.html#cb32-10" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
-<span id="cb32-11"><a href="análisis-exploratorio-de-datos-eda.html#cb32-11" tabindex="-1"></a>    <span class="at">strip.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">&quot;gray90&quot;</span>, <span class="at">color =</span> <span class="cn">NA</span>),</span>
-<span id="cb32-12"><a href="análisis-exploratorio-de-datos-eda.html#cb32-12" tabindex="-1"></a>    <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">&quot;bold&quot;</span>))</span></code></pre></div>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="análisis-exploratorio-de-datos-eda.html#cb33-1" tabindex="-1"></a><span class="co"># Diagrama caja y bigotes: DEATH_EVENT / creatinine_phosphokinase</span></span>
-<span id="cb33-2"><a href="análisis-exploratorio-de-datos-eda.html#cb33-2" tabindex="-1"></a><span class="fu">ggplot</span>(datos, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(DEATH_EVENT), <span class="at">y =</span> creatinine_phosphokinase)) <span class="sc">+</span></span>
-<span id="cb33-3"><a href="análisis-exploratorio-de-datos-eda.html#cb33-3" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="st">&quot;orange&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
-<span id="cb33-4"><a href="análisis-exploratorio-de-datos-eda.html#cb33-4" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb33-5"><a href="análisis-exploratorio-de-datos-eda.html#cb33-5" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Muerte (1 = sí, 0 = no)&quot;</span>,</span>
-<span id="cb33-6"><a href="análisis-exploratorio-de-datos-eda.html#cb33-6" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;µg/L&quot;</span>,</span>
-<span id="cb33-7"><a href="análisis-exploratorio-de-datos-eda.html#cb33-7" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Distribución de nivel de CPK según muerte&quot;</span>) <span class="sc">+</span></span>
-<span id="cb33-8"><a href="análisis-exploratorio-de-datos-eda.html#cb33-8" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb33-9"><a href="análisis-exploratorio-de-datos-eda.html#cb33-9" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb33-10"><a href="análisis-exploratorio-de-datos-eda.html#cb33-10" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
-<span id="cb33-11"><a href="análisis-exploratorio-de-datos-eda.html#cb33-11" tabindex="-1"></a>    <span class="at">strip.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">&quot;gray90&quot;</span>, <span class="at">color =</span> <span class="cn">NA</span>),</span>
-<span id="cb33-12"><a href="análisis-exploratorio-de-datos-eda.html#cb33-12" tabindex="-1"></a>    <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">&quot;bold&quot;</span>))</span></code></pre></div>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="análisis-exploratorio-de-datos-eda.html#cb34-1" tabindex="-1"></a><span class="co"># Diagrama caja y bigotes: DEATH_EVENT / Ejection_fraction</span></span>
-<span id="cb34-2"><a href="análisis-exploratorio-de-datos-eda.html#cb34-2" tabindex="-1"></a><span class="fu">ggplot</span>(datos, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(DEATH_EVENT), <span class="at">y =</span> ejection_fraction)) <span class="sc">+</span></span>
-<span id="cb34-3"><a href="análisis-exploratorio-de-datos-eda.html#cb34-3" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="st">&quot;orange&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
-<span id="cb34-4"><a href="análisis-exploratorio-de-datos-eda.html#cb34-4" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb34-5"><a href="análisis-exploratorio-de-datos-eda.html#cb34-5" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Muerte (1 = sí, 0 = no)&quot;</span>,</span>
-<span id="cb34-6"><a href="análisis-exploratorio-de-datos-eda.html#cb34-6" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;%&quot;</span>,</span>
-<span id="cb34-7"><a href="análisis-exploratorio-de-datos-eda.html#cb34-7" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Distribución del porcentaje de FE según muerte&quot;</span>) <span class="sc">+</span></span>
-<span id="cb34-8"><a href="análisis-exploratorio-de-datos-eda.html#cb34-8" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb34-9"><a href="análisis-exploratorio-de-datos-eda.html#cb34-9" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb34-10"><a href="análisis-exploratorio-de-datos-eda.html#cb34-10" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
-<span id="cb34-11"><a href="análisis-exploratorio-de-datos-eda.html#cb34-11" tabindex="-1"></a>    <span class="at">strip.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">&quot;gray90&quot;</span>, <span class="at">color =</span> <span class="cn">NA</span>),</span>
-<span id="cb34-12"><a href="análisis-exploratorio-de-datos-eda.html#cb34-12" tabindex="-1"></a>    <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">&quot;bold&quot;</span>))</span></code></pre></div>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="análisis-exploratorio-de-datos-eda.html#cb35-1" tabindex="-1"></a><span class="co"># Diagrama caja y bigotes: DEATH_EVENT / platelets</span></span>
-<span id="cb35-2"><a href="análisis-exploratorio-de-datos-eda.html#cb35-2" tabindex="-1"></a><span class="fu">ggplot</span>(datos, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(DEATH_EVENT), <span class="at">y =</span> platelets)) <span class="sc">+</span></span>
-<span id="cb35-3"><a href="análisis-exploratorio-de-datos-eda.html#cb35-3" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="st">&quot;orange&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
-<span id="cb35-4"><a href="análisis-exploratorio-de-datos-eda.html#cb35-4" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb35-5"><a href="análisis-exploratorio-de-datos-eda.html#cb35-5" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Muerte (1 = sí, 0 = no)&quot;</span>,</span>
-<span id="cb35-6"><a href="análisis-exploratorio-de-datos-eda.html#cb35-6" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;&quot;</span>,</span>
-<span id="cb35-7"><a href="análisis-exploratorio-de-datos-eda.html#cb35-7" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Distribución de plaquetas según muerte&quot;</span>) <span class="sc">+</span></span>
-<span id="cb35-8"><a href="análisis-exploratorio-de-datos-eda.html#cb35-8" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb35-9"><a href="análisis-exploratorio-de-datos-eda.html#cb35-9" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb35-10"><a href="análisis-exploratorio-de-datos-eda.html#cb35-10" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
-<span id="cb35-11"><a href="análisis-exploratorio-de-datos-eda.html#cb35-11" tabindex="-1"></a>    <span class="at">strip.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">&quot;gray90&quot;</span>, <span class="at">color =</span> <span class="cn">NA</span>),</span>
-<span id="cb35-12"><a href="análisis-exploratorio-de-datos-eda.html#cb35-12" tabindex="-1"></a>    <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">&quot;bold&quot;</span>))</span></code></pre></div>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="análisis-exploratorio-de-datos-eda.html#cb36-1" tabindex="-1"></a><span class="co"># Diagrama caja y bigotes: DEATH_EVENT / serum_creatinine</span></span>
-<span id="cb36-2"><a href="análisis-exploratorio-de-datos-eda.html#cb36-2" tabindex="-1"></a><span class="fu">ggplot</span>(datos, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(DEATH_EVENT), <span class="at">y =</span> serum_creatinine)) <span class="sc">+</span></span>
-<span id="cb36-3"><a href="análisis-exploratorio-de-datos-eda.html#cb36-3" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="st">&quot;orange&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
-<span id="cb36-4"><a href="análisis-exploratorio-de-datos-eda.html#cb36-4" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb36-5"><a href="análisis-exploratorio-de-datos-eda.html#cb36-5" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Muerte (1 = sí, 0 = no)&quot;</span>,</span>
-<span id="cb36-6"><a href="análisis-exploratorio-de-datos-eda.html#cb36-6" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;mg/dL&quot;</span>,</span>
-<span id="cb36-7"><a href="análisis-exploratorio-de-datos-eda.html#cb36-7" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Distribución del nivel de creatinina según muerte&quot;</span>) <span class="sc">+</span></span>
-<span id="cb36-8"><a href="análisis-exploratorio-de-datos-eda.html#cb36-8" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb36-9"><a href="análisis-exploratorio-de-datos-eda.html#cb36-9" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb36-10"><a href="análisis-exploratorio-de-datos-eda.html#cb36-10" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
-<span id="cb36-11"><a href="análisis-exploratorio-de-datos-eda.html#cb36-11" tabindex="-1"></a>    <span class="at">strip.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">&quot;gray90&quot;</span>, <span class="at">color =</span> <span class="cn">NA</span>),</span>
-<span id="cb36-12"><a href="análisis-exploratorio-de-datos-eda.html#cb36-12" tabindex="-1"></a>    <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">&quot;bold&quot;</span>))</span></code></pre></div>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="análisis-exploratorio-de-datos-eda.html#cb37-1" tabindex="-1"></a><span class="co"># Diagrama caja y bigotes: DEATH_EVENT / serum_sodium</span></span>
-<span id="cb37-2"><a href="análisis-exploratorio-de-datos-eda.html#cb37-2" tabindex="-1"></a><span class="fu">ggplot</span>(datos, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(DEATH_EVENT), <span class="at">y =</span> serum_sodium)) <span class="sc">+</span></span>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="análisis-exploratorio-de-datos-eda.html#cb37-1" tabindex="-1"></a><span class="co"># Diagrama caja y bigotes: DEATH_EVENT / Edad</span></span>
+<span id="cb37-2"><a href="análisis-exploratorio-de-datos-eda.html#cb37-2" tabindex="-1"></a><span class="fu">ggplot</span>(datos, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(DEATH_EVENT), <span class="at">y =</span> age)) <span class="sc">+</span></span>
 <span id="cb37-3"><a href="análisis-exploratorio-de-datos-eda.html#cb37-3" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="st">&quot;orange&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
 <span id="cb37-4"><a href="análisis-exploratorio-de-datos-eda.html#cb37-4" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
 <span id="cb37-5"><a href="análisis-exploratorio-de-datos-eda.html#cb37-5" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Muerte (1 = sí, 0 = no)&quot;</span>,</span>
-<span id="cb37-6"><a href="análisis-exploratorio-de-datos-eda.html#cb37-6" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;mEq/L&quot;</span>,</span>
-<span id="cb37-7"><a href="análisis-exploratorio-de-datos-eda.html#cb37-7" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Distribución del nivel de sodio según muerte&quot;</span>) <span class="sc">+</span></span>
+<span id="cb37-6"><a href="análisis-exploratorio-de-datos-eda.html#cb37-6" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Edad&quot;</span>,</span>
+<span id="cb37-7"><a href="análisis-exploratorio-de-datos-eda.html#cb37-7" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Distribución de edad según muerte&quot;</span>) <span class="sc">+</span></span>
 <span id="cb37-8"><a href="análisis-exploratorio-de-datos-eda.html#cb37-8" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
 <span id="cb37-9"><a href="análisis-exploratorio-de-datos-eda.html#cb37-9" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
 <span id="cb37-10"><a href="análisis-exploratorio-de-datos-eda.html#cb37-10" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
 <span id="cb37-11"><a href="análisis-exploratorio-de-datos-eda.html#cb37-11" tabindex="-1"></a>    <span class="at">strip.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">&quot;gray90&quot;</span>, <span class="at">color =</span> <span class="cn">NA</span>),</span>
 <span id="cb37-12"><a href="análisis-exploratorio-de-datos-eda.html#cb37-12" tabindex="-1"></a>    <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">&quot;bold&quot;</span>))</span></code></pre></div>
 <p><img src="bookdown-demo_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="análisis-exploratorio-de-datos-eda.html#cb38-1" tabindex="-1"></a><span class="co"># Diagrama caja y bigotes: DEATH_EVENT / time</span></span>
-<span id="cb38-2"><a href="análisis-exploratorio-de-datos-eda.html#cb38-2" tabindex="-1"></a><span class="fu">ggplot</span>(datos, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(DEATH_EVENT), <span class="at">y =</span> time)) <span class="sc">+</span></span>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="análisis-exploratorio-de-datos-eda.html#cb38-1" tabindex="-1"></a><span class="co"># Diagrama caja y bigotes: DEATH_EVENT / creatinine_phosphokinase</span></span>
+<span id="cb38-2"><a href="análisis-exploratorio-de-datos-eda.html#cb38-2" tabindex="-1"></a><span class="fu">ggplot</span>(datos, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(DEATH_EVENT), <span class="at">y =</span> creatinine_phosphokinase)) <span class="sc">+</span></span>
 <span id="cb38-3"><a href="análisis-exploratorio-de-datos-eda.html#cb38-3" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="st">&quot;orange&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
 <span id="cb38-4"><a href="análisis-exploratorio-de-datos-eda.html#cb38-4" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
 <span id="cb38-5"><a href="análisis-exploratorio-de-datos-eda.html#cb38-5" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Muerte (1 = sí, 0 = no)&quot;</span>,</span>
-<span id="cb38-6"><a href="análisis-exploratorio-de-datos-eda.html#cb38-6" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Days&quot;</span>,</span>
-<span id="cb38-7"><a href="análisis-exploratorio-de-datos-eda.html#cb38-7" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Distribución del tiempo de seguimiento según muerte&quot;</span>) <span class="sc">+</span></span>
+<span id="cb38-6"><a href="análisis-exploratorio-de-datos-eda.html#cb38-6" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;µg/L&quot;</span>,</span>
+<span id="cb38-7"><a href="análisis-exploratorio-de-datos-eda.html#cb38-7" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Distribución de nivel de CPK según muerte&quot;</span>) <span class="sc">+</span></span>
 <span id="cb38-8"><a href="análisis-exploratorio-de-datos-eda.html#cb38-8" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
 <span id="cb38-9"><a href="análisis-exploratorio-de-datos-eda.html#cb38-9" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
 <span id="cb38-10"><a href="análisis-exploratorio-de-datos-eda.html#cb38-10" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
 <span id="cb38-11"><a href="análisis-exploratorio-de-datos-eda.html#cb38-11" tabindex="-1"></a>    <span class="at">strip.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">&quot;gray90&quot;</span>, <span class="at">color =</span> <span class="cn">NA</span>),</span>
 <span id="cb38-12"><a href="análisis-exploratorio-de-datos-eda.html#cb38-12" tabindex="-1"></a>    <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">&quot;bold&quot;</span>))</span></code></pre></div>
 <p><img src="bookdown-demo_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="análisis-exploratorio-de-datos-eda.html#cb39-1" tabindex="-1"></a><span class="co"># Diagrama caja y bigotes: DEATH_EVENT / Ejection_fraction</span></span>
+<span id="cb39-2"><a href="análisis-exploratorio-de-datos-eda.html#cb39-2" tabindex="-1"></a><span class="fu">ggplot</span>(datos, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(DEATH_EVENT), <span class="at">y =</span> ejection_fraction)) <span class="sc">+</span></span>
+<span id="cb39-3"><a href="análisis-exploratorio-de-datos-eda.html#cb39-3" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="st">&quot;orange&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb39-4"><a href="análisis-exploratorio-de-datos-eda.html#cb39-4" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb39-5"><a href="análisis-exploratorio-de-datos-eda.html#cb39-5" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Muerte (1 = sí, 0 = no)&quot;</span>,</span>
+<span id="cb39-6"><a href="análisis-exploratorio-de-datos-eda.html#cb39-6" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;%&quot;</span>,</span>
+<span id="cb39-7"><a href="análisis-exploratorio-de-datos-eda.html#cb39-7" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Distribución del porcentaje de FE según muerte&quot;</span>) <span class="sc">+</span></span>
+<span id="cb39-8"><a href="análisis-exploratorio-de-datos-eda.html#cb39-8" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb39-9"><a href="análisis-exploratorio-de-datos-eda.html#cb39-9" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb39-10"><a href="análisis-exploratorio-de-datos-eda.html#cb39-10" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
+<span id="cb39-11"><a href="análisis-exploratorio-de-datos-eda.html#cb39-11" tabindex="-1"></a>    <span class="at">strip.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">&quot;gray90&quot;</span>, <span class="at">color =</span> <span class="cn">NA</span>),</span>
+<span id="cb39-12"><a href="análisis-exploratorio-de-datos-eda.html#cb39-12" tabindex="-1"></a>    <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">&quot;bold&quot;</span>))</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="análisis-exploratorio-de-datos-eda.html#cb40-1" tabindex="-1"></a><span class="co"># Diagrama caja y bigotes: DEATH_EVENT / platelets</span></span>
+<span id="cb40-2"><a href="análisis-exploratorio-de-datos-eda.html#cb40-2" tabindex="-1"></a><span class="fu">ggplot</span>(datos, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(DEATH_EVENT), <span class="at">y =</span> platelets)) <span class="sc">+</span></span>
+<span id="cb40-3"><a href="análisis-exploratorio-de-datos-eda.html#cb40-3" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="st">&quot;orange&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb40-4"><a href="análisis-exploratorio-de-datos-eda.html#cb40-4" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb40-5"><a href="análisis-exploratorio-de-datos-eda.html#cb40-5" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Muerte (1 = sí, 0 = no)&quot;</span>,</span>
+<span id="cb40-6"><a href="análisis-exploratorio-de-datos-eda.html#cb40-6" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;&quot;</span>,</span>
+<span id="cb40-7"><a href="análisis-exploratorio-de-datos-eda.html#cb40-7" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Distribución de plaquetas según muerte&quot;</span>) <span class="sc">+</span></span>
+<span id="cb40-8"><a href="análisis-exploratorio-de-datos-eda.html#cb40-8" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb40-9"><a href="análisis-exploratorio-de-datos-eda.html#cb40-9" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb40-10"><a href="análisis-exploratorio-de-datos-eda.html#cb40-10" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
+<span id="cb40-11"><a href="análisis-exploratorio-de-datos-eda.html#cb40-11" tabindex="-1"></a>    <span class="at">strip.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">&quot;gray90&quot;</span>, <span class="at">color =</span> <span class="cn">NA</span>),</span>
+<span id="cb40-12"><a href="análisis-exploratorio-de-datos-eda.html#cb40-12" tabindex="-1"></a>    <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">&quot;bold&quot;</span>))</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="análisis-exploratorio-de-datos-eda.html#cb41-1" tabindex="-1"></a><span class="co"># Diagrama caja y bigotes: DEATH_EVENT / serum_creatinine</span></span>
+<span id="cb41-2"><a href="análisis-exploratorio-de-datos-eda.html#cb41-2" tabindex="-1"></a><span class="fu">ggplot</span>(datos, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(DEATH_EVENT), <span class="at">y =</span> serum_creatinine)) <span class="sc">+</span></span>
+<span id="cb41-3"><a href="análisis-exploratorio-de-datos-eda.html#cb41-3" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="st">&quot;orange&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb41-4"><a href="análisis-exploratorio-de-datos-eda.html#cb41-4" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb41-5"><a href="análisis-exploratorio-de-datos-eda.html#cb41-5" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Muerte (1 = sí, 0 = no)&quot;</span>,</span>
+<span id="cb41-6"><a href="análisis-exploratorio-de-datos-eda.html#cb41-6" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;mg/dL&quot;</span>,</span>
+<span id="cb41-7"><a href="análisis-exploratorio-de-datos-eda.html#cb41-7" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Distribución del nivel de creatinina según muerte&quot;</span>) <span class="sc">+</span></span>
+<span id="cb41-8"><a href="análisis-exploratorio-de-datos-eda.html#cb41-8" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb41-9"><a href="análisis-exploratorio-de-datos-eda.html#cb41-9" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb41-10"><a href="análisis-exploratorio-de-datos-eda.html#cb41-10" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
+<span id="cb41-11"><a href="análisis-exploratorio-de-datos-eda.html#cb41-11" tabindex="-1"></a>    <span class="at">strip.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">&quot;gray90&quot;</span>, <span class="at">color =</span> <span class="cn">NA</span>),</span>
+<span id="cb41-12"><a href="análisis-exploratorio-de-datos-eda.html#cb41-12" tabindex="-1"></a>    <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">&quot;bold&quot;</span>))</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="análisis-exploratorio-de-datos-eda.html#cb42-1" tabindex="-1"></a><span class="co"># Diagrama caja y bigotes: DEATH_EVENT / serum_sodium</span></span>
+<span id="cb42-2"><a href="análisis-exploratorio-de-datos-eda.html#cb42-2" tabindex="-1"></a><span class="fu">ggplot</span>(datos, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(DEATH_EVENT), <span class="at">y =</span> serum_sodium)) <span class="sc">+</span></span>
+<span id="cb42-3"><a href="análisis-exploratorio-de-datos-eda.html#cb42-3" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="st">&quot;orange&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb42-4"><a href="análisis-exploratorio-de-datos-eda.html#cb42-4" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb42-5"><a href="análisis-exploratorio-de-datos-eda.html#cb42-5" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Muerte (1 = sí, 0 = no)&quot;</span>,</span>
+<span id="cb42-6"><a href="análisis-exploratorio-de-datos-eda.html#cb42-6" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;mEq/L&quot;</span>,</span>
+<span id="cb42-7"><a href="análisis-exploratorio-de-datos-eda.html#cb42-7" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Distribución del nivel de sodio según muerte&quot;</span>) <span class="sc">+</span></span>
+<span id="cb42-8"><a href="análisis-exploratorio-de-datos-eda.html#cb42-8" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb42-9"><a href="análisis-exploratorio-de-datos-eda.html#cb42-9" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb42-10"><a href="análisis-exploratorio-de-datos-eda.html#cb42-10" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
+<span id="cb42-11"><a href="análisis-exploratorio-de-datos-eda.html#cb42-11" tabindex="-1"></a>    <span class="at">strip.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">&quot;gray90&quot;</span>, <span class="at">color =</span> <span class="cn">NA</span>),</span>
+<span id="cb42-12"><a href="análisis-exploratorio-de-datos-eda.html#cb42-12" tabindex="-1"></a>    <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">&quot;bold&quot;</span>))</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="análisis-exploratorio-de-datos-eda.html#cb43-1" tabindex="-1"></a><span class="co"># Diagrama caja y bigotes: DEATH_EVENT / time</span></span>
+<span id="cb43-2"><a href="análisis-exploratorio-de-datos-eda.html#cb43-2" tabindex="-1"></a><span class="fu">ggplot</span>(datos, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(DEATH_EVENT), <span class="at">y =</span> time)) <span class="sc">+</span></span>
+<span id="cb43-3"><a href="análisis-exploratorio-de-datos-eda.html#cb43-3" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="st">&quot;orange&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb43-4"><a href="análisis-exploratorio-de-datos-eda.html#cb43-4" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb43-5"><a href="análisis-exploratorio-de-datos-eda.html#cb43-5" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Muerte (1 = sí, 0 = no)&quot;</span>,</span>
+<span id="cb43-6"><a href="análisis-exploratorio-de-datos-eda.html#cb43-6" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Days&quot;</span>,</span>
+<span id="cb43-7"><a href="análisis-exploratorio-de-datos-eda.html#cb43-7" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Distribución del tiempo de seguimiento según muerte&quot;</span>) <span class="sc">+</span></span>
+<span id="cb43-8"><a href="análisis-exploratorio-de-datos-eda.html#cb43-8" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb43-9"><a href="análisis-exploratorio-de-datos-eda.html#cb43-9" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb43-10"><a href="análisis-exploratorio-de-datos-eda.html#cb43-10" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
+<span id="cb43-11"><a href="análisis-exploratorio-de-datos-eda.html#cb43-11" tabindex="-1"></a>    <span class="at">strip.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">&quot;gray90&quot;</span>, <span class="at">color =</span> <span class="cn">NA</span>),</span>
+<span id="cb43-12"><a href="análisis-exploratorio-de-datos-eda.html#cb43-12" tabindex="-1"></a>    <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">&quot;bold&quot;</span>))</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-26-1.png" width="672" /></p>
+<ul>
+<li>Comparación de las variables numéricas independientes con respecto a la variable <code>DEATH_EVENT</code></li>
+</ul>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="análisis-exploratorio-de-datos-eda.html#cb44-1" tabindex="-1"></a>age_y <span class="ot">&lt;-</span> datos <span class="sc">%&gt;%</span></span>
+<span id="cb44-2"><a href="análisis-exploratorio-de-datos-eda.html#cb44-2" tabindex="-1"></a>  <span class="fu">group_by</span>(DEATH_EVENT) <span class="sc">%&gt;%</span></span>
+<span id="cb44-3"><a href="análisis-exploratorio-de-datos-eda.html#cb44-3" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">length</span>(age),</span>
+<span id="cb44-4"><a href="análisis-exploratorio-de-datos-eda.html#cb44-4" tabindex="-1"></a>            <span class="at">media =</span> <span class="fu">mean</span>(age),</span>
+<span id="cb44-5"><a href="análisis-exploratorio-de-datos-eda.html#cb44-5" tabindex="-1"></a>            <span class="at">ds =</span> <span class="fu">sd</span>(age),</span>
+<span id="cb44-6"><a href="análisis-exploratorio-de-datos-eda.html#cb44-6" tabindex="-1"></a>            <span class="at">mediana =</span> <span class="fu">median</span>(age),</span>
+<span id="cb44-7"><a href="análisis-exploratorio-de-datos-eda.html#cb44-7" tabindex="-1"></a>            <span class="at">minimo =</span> <span class="fu">min</span>(age),</span>
+<span id="cb44-8"><a href="análisis-exploratorio-de-datos-eda.html#cb44-8" tabindex="-1"></a>            <span class="at">maximo =</span> <span class="fu">max</span>(age),</span>
+<span id="cb44-9"><a href="análisis-exploratorio-de-datos-eda.html#cb44-9" tabindex="-1"></a>            <span class="at">Q1 =</span> <span class="fu">quantile</span>(age, <span class="fl">0.25</span>),</span>
+<span id="cb44-10"><a href="análisis-exploratorio-de-datos-eda.html#cb44-10" tabindex="-1"></a>            <span class="at">Q3 =</span> <span class="fu">quantile</span>(age, <span class="fl">0.75</span>),</span>
+<span id="cb44-11"><a href="análisis-exploratorio-de-datos-eda.html#cb44-11" tabindex="-1"></a>            <span class="at">IQR =</span> <span class="fu">IQR</span>(age)) <span class="sc">%&gt;%</span></span>
+<span id="cb44-12"><a href="análisis-exploratorio-de-datos-eda.html#cb44-12" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">variable =</span> <span class="st">&quot;age&quot;</span>, <span class="at">niveles =</span> <span class="fu">as.character</span>(DEATH_EVENT)) <span class="sc">%&gt;%</span></span>
+<span id="cb44-13"><a href="análisis-exploratorio-de-datos-eda.html#cb44-13" tabindex="-1"></a>  <span class="fu">select</span>(variable, niveles, <span class="fu">everything</span>(), <span class="sc">-</span>DEATH_EVENT)</span>
+<span id="cb44-14"><a href="análisis-exploratorio-de-datos-eda.html#cb44-14" tabindex="-1"></a></span>
+<span id="cb44-15"><a href="análisis-exploratorio-de-datos-eda.html#cb44-15" tabindex="-1"></a>cp_y <span class="ot">&lt;-</span> datos <span class="sc">%&gt;%</span></span>
+<span id="cb44-16"><a href="análisis-exploratorio-de-datos-eda.html#cb44-16" tabindex="-1"></a>  <span class="fu">group_by</span>(DEATH_EVENT) <span class="sc">%&gt;%</span></span>
+<span id="cb44-17"><a href="análisis-exploratorio-de-datos-eda.html#cb44-17" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">length</span>(creatinine_phosphokinase),</span>
+<span id="cb44-18"><a href="análisis-exploratorio-de-datos-eda.html#cb44-18" tabindex="-1"></a>            <span class="at">media =</span> <span class="fu">mean</span>(creatinine_phosphokinase),</span>
+<span id="cb44-19"><a href="análisis-exploratorio-de-datos-eda.html#cb44-19" tabindex="-1"></a>            <span class="at">ds =</span> <span class="fu">sd</span>(creatinine_phosphokinase),</span>
+<span id="cb44-20"><a href="análisis-exploratorio-de-datos-eda.html#cb44-20" tabindex="-1"></a>            <span class="at">mediana =</span> <span class="fu">median</span>(creatinine_phosphokinase),</span>
+<span id="cb44-21"><a href="análisis-exploratorio-de-datos-eda.html#cb44-21" tabindex="-1"></a>            <span class="at">minimo =</span> <span class="fu">min</span>(creatinine_phosphokinase),</span>
+<span id="cb44-22"><a href="análisis-exploratorio-de-datos-eda.html#cb44-22" tabindex="-1"></a>            <span class="at">maximo =</span> <span class="fu">max</span>(creatinine_phosphokinase),</span>
+<span id="cb44-23"><a href="análisis-exploratorio-de-datos-eda.html#cb44-23" tabindex="-1"></a>            <span class="at">Q1 =</span> <span class="fu">quantile</span>(creatinine_phosphokinase, <span class="fl">0.25</span>),</span>
+<span id="cb44-24"><a href="análisis-exploratorio-de-datos-eda.html#cb44-24" tabindex="-1"></a>            <span class="at">Q3 =</span> <span class="fu">quantile</span>(creatinine_phosphokinase, <span class="fl">0.75</span>),</span>
+<span id="cb44-25"><a href="análisis-exploratorio-de-datos-eda.html#cb44-25" tabindex="-1"></a>            <span class="at">IQR =</span> <span class="fu">IQR</span>(creatinine_phosphokinase)) <span class="sc">%&gt;%</span></span>
+<span id="cb44-26"><a href="análisis-exploratorio-de-datos-eda.html#cb44-26" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">variable =</span> <span class="st">&quot;creatinine_phosphokinase&quot;</span>, <span class="at">niveles =</span> <span class="fu">as.character</span>(DEATH_EVENT)) <span class="sc">%&gt;%</span></span>
+<span id="cb44-27"><a href="análisis-exploratorio-de-datos-eda.html#cb44-27" tabindex="-1"></a>  <span class="fu">select</span>(variable, niveles, <span class="fu">everything</span>(), <span class="sc">-</span>DEATH_EVENT)</span>
+<span id="cb44-28"><a href="análisis-exploratorio-de-datos-eda.html#cb44-28" tabindex="-1"></a></span>
+<span id="cb44-29"><a href="análisis-exploratorio-de-datos-eda.html#cb44-29" tabindex="-1"></a>ef_y <span class="ot">&lt;-</span> datos <span class="sc">%&gt;%</span></span>
+<span id="cb44-30"><a href="análisis-exploratorio-de-datos-eda.html#cb44-30" tabindex="-1"></a>  <span class="fu">group_by</span>(DEATH_EVENT) <span class="sc">%&gt;%</span></span>
+<span id="cb44-31"><a href="análisis-exploratorio-de-datos-eda.html#cb44-31" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">length</span>(ejection_fraction),</span>
+<span id="cb44-32"><a href="análisis-exploratorio-de-datos-eda.html#cb44-32" tabindex="-1"></a>            <span class="at">media =</span> <span class="fu">mean</span>(ejection_fraction),</span>
+<span id="cb44-33"><a href="análisis-exploratorio-de-datos-eda.html#cb44-33" tabindex="-1"></a>            <span class="at">ds =</span> <span class="fu">sd</span>(ejection_fraction),</span>
+<span id="cb44-34"><a href="análisis-exploratorio-de-datos-eda.html#cb44-34" tabindex="-1"></a>            <span class="at">mediana =</span> <span class="fu">median</span>(ejection_fraction),</span>
+<span id="cb44-35"><a href="análisis-exploratorio-de-datos-eda.html#cb44-35" tabindex="-1"></a>            <span class="at">minimo =</span> <span class="fu">min</span>(ejection_fraction),</span>
+<span id="cb44-36"><a href="análisis-exploratorio-de-datos-eda.html#cb44-36" tabindex="-1"></a>            <span class="at">maximo =</span> <span class="fu">max</span>(ejection_fraction),</span>
+<span id="cb44-37"><a href="análisis-exploratorio-de-datos-eda.html#cb44-37" tabindex="-1"></a>            <span class="at">Q1 =</span> <span class="fu">quantile</span>(ejection_fraction, <span class="fl">0.25</span>),</span>
+<span id="cb44-38"><a href="análisis-exploratorio-de-datos-eda.html#cb44-38" tabindex="-1"></a>            <span class="at">Q3 =</span> <span class="fu">quantile</span>(ejection_fraction, <span class="fl">0.75</span>),</span>
+<span id="cb44-39"><a href="análisis-exploratorio-de-datos-eda.html#cb44-39" tabindex="-1"></a>            <span class="at">IQR =</span> <span class="fu">IQR</span>(ejection_fraction)) <span class="sc">%&gt;%</span></span>
+<span id="cb44-40"><a href="análisis-exploratorio-de-datos-eda.html#cb44-40" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">variable =</span> <span class="st">&quot;ejection_fraction&quot;</span>, <span class="at">niveles =</span> <span class="fu">as.character</span>(DEATH_EVENT)) <span class="sc">%&gt;%</span></span>
+<span id="cb44-41"><a href="análisis-exploratorio-de-datos-eda.html#cb44-41" tabindex="-1"></a>  <span class="fu">select</span>(variable, niveles, <span class="fu">everything</span>(), <span class="sc">-</span>DEATH_EVENT)</span>
+<span id="cb44-42"><a href="análisis-exploratorio-de-datos-eda.html#cb44-42" tabindex="-1"></a></span>
+<span id="cb44-43"><a href="análisis-exploratorio-de-datos-eda.html#cb44-43" tabindex="-1"></a>platelets_y <span class="ot">&lt;-</span> datos <span class="sc">%&gt;%</span></span>
+<span id="cb44-44"><a href="análisis-exploratorio-de-datos-eda.html#cb44-44" tabindex="-1"></a>  <span class="fu">group_by</span>(DEATH_EVENT) <span class="sc">%&gt;%</span></span>
+<span id="cb44-45"><a href="análisis-exploratorio-de-datos-eda.html#cb44-45" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">length</span>(platelets),</span>
+<span id="cb44-46"><a href="análisis-exploratorio-de-datos-eda.html#cb44-46" tabindex="-1"></a>            <span class="at">media =</span> <span class="fu">mean</span>(platelets),</span>
+<span id="cb44-47"><a href="análisis-exploratorio-de-datos-eda.html#cb44-47" tabindex="-1"></a>            <span class="at">ds =</span> <span class="fu">sd</span>(platelets),</span>
+<span id="cb44-48"><a href="análisis-exploratorio-de-datos-eda.html#cb44-48" tabindex="-1"></a>            <span class="at">mediana =</span> <span class="fu">median</span>(platelets),</span>
+<span id="cb44-49"><a href="análisis-exploratorio-de-datos-eda.html#cb44-49" tabindex="-1"></a>            <span class="at">minimo =</span> <span class="fu">min</span>(platelets),</span>
+<span id="cb44-50"><a href="análisis-exploratorio-de-datos-eda.html#cb44-50" tabindex="-1"></a>            <span class="at">maximo =</span> <span class="fu">max</span>(platelets),</span>
+<span id="cb44-51"><a href="análisis-exploratorio-de-datos-eda.html#cb44-51" tabindex="-1"></a>            <span class="at">Q1 =</span> <span class="fu">quantile</span>(platelets, <span class="fl">0.25</span>),</span>
+<span id="cb44-52"><a href="análisis-exploratorio-de-datos-eda.html#cb44-52" tabindex="-1"></a>            <span class="at">Q3 =</span> <span class="fu">quantile</span>(platelets, <span class="fl">0.75</span>),</span>
+<span id="cb44-53"><a href="análisis-exploratorio-de-datos-eda.html#cb44-53" tabindex="-1"></a>            <span class="at">IQR =</span> <span class="fu">IQR</span>(platelets)) <span class="sc">%&gt;%</span></span>
+<span id="cb44-54"><a href="análisis-exploratorio-de-datos-eda.html#cb44-54" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">variable =</span> <span class="st">&quot;platelets&quot;</span>, <span class="at">niveles =</span> <span class="fu">as.character</span>(DEATH_EVENT)) <span class="sc">%&gt;%</span></span>
+<span id="cb44-55"><a href="análisis-exploratorio-de-datos-eda.html#cb44-55" tabindex="-1"></a>  <span class="fu">select</span>(variable, niveles, <span class="fu">everything</span>(), <span class="sc">-</span>DEATH_EVENT)</span>
+<span id="cb44-56"><a href="análisis-exploratorio-de-datos-eda.html#cb44-56" tabindex="-1"></a></span>
+<span id="cb44-57"><a href="análisis-exploratorio-de-datos-eda.html#cb44-57" tabindex="-1"></a>sc_y <span class="ot">&lt;-</span> datos <span class="sc">%&gt;%</span></span>
+<span id="cb44-58"><a href="análisis-exploratorio-de-datos-eda.html#cb44-58" tabindex="-1"></a>  <span class="fu">group_by</span>(DEATH_EVENT) <span class="sc">%&gt;%</span></span>
+<span id="cb44-59"><a href="análisis-exploratorio-de-datos-eda.html#cb44-59" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">length</span>(serum_creatinine),</span>
+<span id="cb44-60"><a href="análisis-exploratorio-de-datos-eda.html#cb44-60" tabindex="-1"></a>            <span class="at">media =</span> <span class="fu">mean</span>(serum_creatinine),</span>
+<span id="cb44-61"><a href="análisis-exploratorio-de-datos-eda.html#cb44-61" tabindex="-1"></a>            <span class="at">ds =</span> <span class="fu">sd</span>(serum_creatinine),</span>
+<span id="cb44-62"><a href="análisis-exploratorio-de-datos-eda.html#cb44-62" tabindex="-1"></a>            <span class="at">mediana =</span> <span class="fu">median</span>(serum_creatinine),</span>
+<span id="cb44-63"><a href="análisis-exploratorio-de-datos-eda.html#cb44-63" tabindex="-1"></a>            <span class="at">minimo =</span> <span class="fu">min</span>(serum_creatinine),</span>
+<span id="cb44-64"><a href="análisis-exploratorio-de-datos-eda.html#cb44-64" tabindex="-1"></a>            <span class="at">maximo =</span> <span class="fu">max</span>(serum_creatinine),</span>
+<span id="cb44-65"><a href="análisis-exploratorio-de-datos-eda.html#cb44-65" tabindex="-1"></a>            <span class="at">Q1 =</span> <span class="fu">quantile</span>(serum_creatinine, <span class="fl">0.25</span>),</span>
+<span id="cb44-66"><a href="análisis-exploratorio-de-datos-eda.html#cb44-66" tabindex="-1"></a>            <span class="at">Q3 =</span> <span class="fu">quantile</span>(serum_creatinine, <span class="fl">0.75</span>),</span>
+<span id="cb44-67"><a href="análisis-exploratorio-de-datos-eda.html#cb44-67" tabindex="-1"></a>            <span class="at">IQR =</span> <span class="fu">IQR</span>(serum_creatinine)) <span class="sc">%&gt;%</span></span>
+<span id="cb44-68"><a href="análisis-exploratorio-de-datos-eda.html#cb44-68" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">variable =</span> <span class="st">&quot;serum_creatinine&quot;</span>, <span class="at">niveles =</span> <span class="fu">as.character</span>(DEATH_EVENT)) <span class="sc">%&gt;%</span></span>
+<span id="cb44-69"><a href="análisis-exploratorio-de-datos-eda.html#cb44-69" tabindex="-1"></a>  <span class="fu">select</span>(variable, niveles, <span class="fu">everything</span>(), <span class="sc">-</span>DEATH_EVENT)</span>
+<span id="cb44-70"><a href="análisis-exploratorio-de-datos-eda.html#cb44-70" tabindex="-1"></a></span>
+<span id="cb44-71"><a href="análisis-exploratorio-de-datos-eda.html#cb44-71" tabindex="-1"></a>ss_y <span class="ot">&lt;-</span> datos <span class="sc">%&gt;%</span></span>
+<span id="cb44-72"><a href="análisis-exploratorio-de-datos-eda.html#cb44-72" tabindex="-1"></a>  <span class="fu">group_by</span>(DEATH_EVENT) <span class="sc">%&gt;%</span></span>
+<span id="cb44-73"><a href="análisis-exploratorio-de-datos-eda.html#cb44-73" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">length</span>(serum_sodium),</span>
+<span id="cb44-74"><a href="análisis-exploratorio-de-datos-eda.html#cb44-74" tabindex="-1"></a>            <span class="at">media =</span> <span class="fu">mean</span>(serum_sodium),</span>
+<span id="cb44-75"><a href="análisis-exploratorio-de-datos-eda.html#cb44-75" tabindex="-1"></a>            <span class="at">ds =</span> <span class="fu">sd</span>(serum_sodium),</span>
+<span id="cb44-76"><a href="análisis-exploratorio-de-datos-eda.html#cb44-76" tabindex="-1"></a>            <span class="at">mediana =</span> <span class="fu">median</span>(serum_sodium),</span>
+<span id="cb44-77"><a href="análisis-exploratorio-de-datos-eda.html#cb44-77" tabindex="-1"></a>            <span class="at">minimo =</span> <span class="fu">min</span>(serum_sodium),</span>
+<span id="cb44-78"><a href="análisis-exploratorio-de-datos-eda.html#cb44-78" tabindex="-1"></a>            <span class="at">maximo =</span> <span class="fu">max</span>(serum_sodium),</span>
+<span id="cb44-79"><a href="análisis-exploratorio-de-datos-eda.html#cb44-79" tabindex="-1"></a>            <span class="at">Q1 =</span> <span class="fu">quantile</span>(serum_sodium, <span class="fl">0.25</span>),</span>
+<span id="cb44-80"><a href="análisis-exploratorio-de-datos-eda.html#cb44-80" tabindex="-1"></a>            <span class="at">Q3 =</span> <span class="fu">quantile</span>(serum_sodium, <span class="fl">0.75</span>),</span>
+<span id="cb44-81"><a href="análisis-exploratorio-de-datos-eda.html#cb44-81" tabindex="-1"></a>            <span class="at">IQR =</span> <span class="fu">IQR</span>(serum_sodium)) <span class="sc">%&gt;%</span></span>
+<span id="cb44-82"><a href="análisis-exploratorio-de-datos-eda.html#cb44-82" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">variable =</span> <span class="st">&quot;serum_sodium&quot;</span>, <span class="at">niveles =</span> <span class="fu">as.character</span>(DEATH_EVENT)) <span class="sc">%&gt;%</span></span>
+<span id="cb44-83"><a href="análisis-exploratorio-de-datos-eda.html#cb44-83" tabindex="-1"></a>  <span class="fu">select</span>(variable, niveles, <span class="fu">everything</span>(), <span class="sc">-</span>DEATH_EVENT)</span>
+<span id="cb44-84"><a href="análisis-exploratorio-de-datos-eda.html#cb44-84" tabindex="-1"></a></span>
+<span id="cb44-85"><a href="análisis-exploratorio-de-datos-eda.html#cb44-85" tabindex="-1"></a>time_y <span class="ot">&lt;-</span> datos <span class="sc">%&gt;%</span></span>
+<span id="cb44-86"><a href="análisis-exploratorio-de-datos-eda.html#cb44-86" tabindex="-1"></a>  <span class="fu">group_by</span>(DEATH_EVENT) <span class="sc">%&gt;%</span></span>
+<span id="cb44-87"><a href="análisis-exploratorio-de-datos-eda.html#cb44-87" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">length</span>(time),</span>
+<span id="cb44-88"><a href="análisis-exploratorio-de-datos-eda.html#cb44-88" tabindex="-1"></a>            <span class="at">media =</span> <span class="fu">mean</span>(time),</span>
+<span id="cb44-89"><a href="análisis-exploratorio-de-datos-eda.html#cb44-89" tabindex="-1"></a>            <span class="at">ds =</span> <span class="fu">sd</span>(time),</span>
+<span id="cb44-90"><a href="análisis-exploratorio-de-datos-eda.html#cb44-90" tabindex="-1"></a>            <span class="at">mediana =</span> <span class="fu">median</span>(time),</span>
+<span id="cb44-91"><a href="análisis-exploratorio-de-datos-eda.html#cb44-91" tabindex="-1"></a>            <span class="at">minimo =</span> <span class="fu">min</span>(time),</span>
+<span id="cb44-92"><a href="análisis-exploratorio-de-datos-eda.html#cb44-92" tabindex="-1"></a>            <span class="at">maximo =</span> <span class="fu">max</span>(time),</span>
+<span id="cb44-93"><a href="análisis-exploratorio-de-datos-eda.html#cb44-93" tabindex="-1"></a>            <span class="at">Q1 =</span> <span class="fu">quantile</span>(time, <span class="fl">0.25</span>),</span>
+<span id="cb44-94"><a href="análisis-exploratorio-de-datos-eda.html#cb44-94" tabindex="-1"></a>            <span class="at">Q3 =</span> <span class="fu">quantile</span>(time, <span class="fl">0.75</span>),</span>
+<span id="cb44-95"><a href="análisis-exploratorio-de-datos-eda.html#cb44-95" tabindex="-1"></a>            <span class="at">IQR =</span> <span class="fu">IQR</span>(time)) <span class="sc">%&gt;%</span></span>
+<span id="cb44-96"><a href="análisis-exploratorio-de-datos-eda.html#cb44-96" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">variable =</span> <span class="st">&quot;time&quot;</span>, <span class="at">niveles =</span> <span class="fu">as.character</span>(DEATH_EVENT)) <span class="sc">%&gt;%</span></span>
+<span id="cb44-97"><a href="análisis-exploratorio-de-datos-eda.html#cb44-97" tabindex="-1"></a>  <span class="fu">select</span>(variable, niveles, <span class="fu">everything</span>(), <span class="sc">-</span>DEATH_EVENT)</span>
+<span id="cb44-98"><a href="análisis-exploratorio-de-datos-eda.html#cb44-98" tabindex="-1"></a></span>
+<span id="cb44-99"><a href="análisis-exploratorio-de-datos-eda.html#cb44-99" tabindex="-1"></a><span class="fu">bind_rows</span>(age_y, cp_y, ef_y, platelets_y, sc_y, ss_y, time_y)</span></code></pre></div>
+<pre><code>## # A tibble: 14 × 11
+##    variable   niveles     n  media      ds mediana  minimo maximo      Q1     Q3
+##    &lt;chr&gt;      &lt;chr&gt;   &lt;int&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;
+##  1 age        0         203 5.88e1 1.06e+1  6   e1    40   9   e1 5   e+1 6.5 e1
+##  2 age        1          96 6.52e1 1.32e+1  6.5 e1    42   9.5 e1 5.5 e+1 7.5 e1
+##  3 creatinin… 0         203 5.40e2 7.54e+2  2.45e2    30   5.21e3 1.09e+2 5.82e2
+##  4 creatinin… 1          96 6.70e2 1.32e+3  2.59e2    23   7.86e3 1.29e+2 5.82e2
+##  5 ejection_… 0         203 4.03e1 1.09e+1  3.8 e1    17   8   e1 3.5 e+1 4.5 e1
+##  6 ejection_… 1          96 3.35e1 1.25e+1  3   e1    14   7   e1 2.5 e+1 3.8 e1
+##  7 platelets  0         203 2.67e5 9.75e+4  2.63e5 25100   8.5 e5 2.20e+5 3.02e5
+##  8 platelets  1          96 2.56e5 9.85e+4  2.58e5 47000   6.21e5 1.98e+5 3.11e5
+##  9 serum_cre… 0         203 1.18e0 6.54e-1  1   e0     0.5 6.1 e0 9   e-1 1.2 e0
+## 10 serum_cre… 1          96 1.84e0 1.47e+0  1.3 e0     0.6 9.4 e0 1.08e+0 1.9 e0
+## 11 serum_sod… 0         203 1.37e2 3.98e+0  1.37e2   113   1.48e2 1.36e+2 1.4 e2
+## 12 serum_sod… 1          96 1.35e2 5.00e+0  1.36e2   116   1.46e2 1.33e+2 1.38e2
+## 13 time       0         203 1.58e2 6.77e+1  1.72e2    12   2.85e2 9.5 e+1 2.13e2
+## 14 time       1          96 7.09e1 6.24e+1  4.45e1     4   2.41e2 2.55e+1 1.02e2
+## # ℹ 1 more variable: IQR &lt;dbl&gt;</code></pre>
+<ul>
+<li>Comparación de las variables categóricas independientes con respecto a la variable <code>DEATH_EVENT</code></li>
+</ul>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="análisis-exploratorio-de-datos-eda.html#cb46-1" tabindex="-1"></a>datos <span class="sc">%&gt;%</span></span>
+<span id="cb46-2"><a href="análisis-exploratorio-de-datos-eda.html#cb46-2" tabindex="-1"></a>  <span class="fu">group_by</span>(DEATH_EVENT) <span class="sc">%&gt;%</span></span>
+<span id="cb46-3"><a href="análisis-exploratorio-de-datos-eda.html#cb46-3" tabindex="-1"></a>  <span class="fu">count</span>(anaemia, <span class="at">name =</span> <span class="st">&quot;n&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb46-4"><a href="análisis-exploratorio-de-datos-eda.html#cb46-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">categoria =</span> anaemia,</span>
+<span id="cb46-5"><a href="análisis-exploratorio-de-datos-eda.html#cb46-5" tabindex="-1"></a>         <span class="at">variable =</span> <span class="st">&quot;Anemia&quot;</span>,</span>
+<span id="cb46-6"><a href="análisis-exploratorio-de-datos-eda.html#cb46-6" tabindex="-1"></a>         <span class="at">porcentaje =</span> (n <span class="sc">/</span> <span class="fu">sum</span>(n)) <span class="sc">*</span> <span class="dv">100</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb46-7"><a href="análisis-exploratorio-de-datos-eda.html#cb46-7" tabindex="-1"></a>  <span class="fu">select</span>(DEATH_EVENT, variable, categoria, n, porcentaje)</span></code></pre></div>
+<pre><code>## # A tibble: 4 × 5
+## # Groups:   DEATH_EVENT [2]
+##   DEATH_EVENT variable categoria     n porcentaje
+##         &lt;dbl&gt; &lt;chr&gt;        &lt;dbl&gt; &lt;int&gt;      &lt;dbl&gt;
+## 1           0 Anemia           0   120       59.1
+## 2           0 Anemia           1    83       40.9
+## 3           1 Anemia           0    50       52.1
+## 4           1 Anemia           1    46       47.9</code></pre>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="análisis-exploratorio-de-datos-eda.html#cb48-1" tabindex="-1"></a>datos <span class="sc">%&gt;%</span></span>
+<span id="cb48-2"><a href="análisis-exploratorio-de-datos-eda.html#cb48-2" tabindex="-1"></a>  <span class="fu">group_by</span>(DEATH_EVENT) <span class="sc">%&gt;%</span></span>
+<span id="cb48-3"><a href="análisis-exploratorio-de-datos-eda.html#cb48-3" tabindex="-1"></a>  <span class="fu">count</span>(diabetes, <span class="at">name =</span> <span class="st">&quot;n&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb48-4"><a href="análisis-exploratorio-de-datos-eda.html#cb48-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">categoria =</span> diabetes,</span>
+<span id="cb48-5"><a href="análisis-exploratorio-de-datos-eda.html#cb48-5" tabindex="-1"></a>         <span class="at">variable =</span> <span class="st">&quot;Diabetes&quot;</span>,</span>
+<span id="cb48-6"><a href="análisis-exploratorio-de-datos-eda.html#cb48-6" tabindex="-1"></a>         <span class="at">porcentaje =</span> (n <span class="sc">/</span> <span class="fu">sum</span>(n)) <span class="sc">*</span> <span class="dv">100</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb48-7"><a href="análisis-exploratorio-de-datos-eda.html#cb48-7" tabindex="-1"></a>  <span class="fu">select</span>(DEATH_EVENT, variable, categoria, n, porcentaje)</span></code></pre></div>
+<pre><code>## # A tibble: 4 × 5
+## # Groups:   DEATH_EVENT [2]
+##   DEATH_EVENT variable categoria     n porcentaje
+##         &lt;dbl&gt; &lt;chr&gt;        &lt;dbl&gt; &lt;int&gt;      &lt;dbl&gt;
+## 1           0 Diabetes         0   118       58.1
+## 2           0 Diabetes         1    85       41.9
+## 3           1 Diabetes         0    56       58.3
+## 4           1 Diabetes         1    40       41.7</code></pre>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="análisis-exploratorio-de-datos-eda.html#cb50-1" tabindex="-1"></a>datos <span class="sc">%&gt;%</span></span>
+<span id="cb50-2"><a href="análisis-exploratorio-de-datos-eda.html#cb50-2" tabindex="-1"></a>  <span class="fu">group_by</span>(DEATH_EVENT) <span class="sc">%&gt;%</span></span>
+<span id="cb50-3"><a href="análisis-exploratorio-de-datos-eda.html#cb50-3" tabindex="-1"></a>  <span class="fu">count</span>(high_blood_pressure, <span class="at">name =</span> <span class="st">&quot;n&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb50-4"><a href="análisis-exploratorio-de-datos-eda.html#cb50-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">categoria =</span> high_blood_pressure,</span>
+<span id="cb50-5"><a href="análisis-exploratorio-de-datos-eda.html#cb50-5" tabindex="-1"></a>         <span class="at">variable =</span> <span class="st">&quot;Presión alta&quot;</span>,</span>
+<span id="cb50-6"><a href="análisis-exploratorio-de-datos-eda.html#cb50-6" tabindex="-1"></a>         <span class="at">porcentaje =</span> (n <span class="sc">/</span> <span class="fu">sum</span>(n)) <span class="sc">*</span> <span class="dv">100</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb50-7"><a href="análisis-exploratorio-de-datos-eda.html#cb50-7" tabindex="-1"></a>  <span class="fu">select</span>(DEATH_EVENT, variable, categoria, n, porcentaje)</span></code></pre></div>
+<pre><code>## # A tibble: 4 × 5
+## # Groups:   DEATH_EVENT [2]
+##   DEATH_EVENT variable     categoria     n porcentaje
+##         &lt;dbl&gt; &lt;chr&gt;            &lt;dbl&gt; &lt;int&gt;      &lt;dbl&gt;
+## 1           0 Presión alta         0   137       67.5
+## 2           0 Presión alta         1    66       32.5
+## 3           1 Presión alta         0    57       59.4
+## 4           1 Presión alta         1    39       40.6</code></pre>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="análisis-exploratorio-de-datos-eda.html#cb52-1" tabindex="-1"></a>datos <span class="sc">%&gt;%</span></span>
+<span id="cb52-2"><a href="análisis-exploratorio-de-datos-eda.html#cb52-2" tabindex="-1"></a>  <span class="fu">group_by</span>(DEATH_EVENT) <span class="sc">%&gt;%</span></span>
+<span id="cb52-3"><a href="análisis-exploratorio-de-datos-eda.html#cb52-3" tabindex="-1"></a>  <span class="fu">count</span>(sex, <span class="at">name =</span> <span class="st">&quot;n&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb52-4"><a href="análisis-exploratorio-de-datos-eda.html#cb52-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">categoria =</span> sex,</span>
+<span id="cb52-5"><a href="análisis-exploratorio-de-datos-eda.html#cb52-5" tabindex="-1"></a>         <span class="at">variable =</span> <span class="st">&quot;Sexo&quot;</span>,</span>
+<span id="cb52-6"><a href="análisis-exploratorio-de-datos-eda.html#cb52-6" tabindex="-1"></a>         <span class="at">porcentaje =</span> (n <span class="sc">/</span> <span class="fu">sum</span>(n)) <span class="sc">*</span> <span class="dv">100</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb52-7"><a href="análisis-exploratorio-de-datos-eda.html#cb52-7" tabindex="-1"></a>  <span class="fu">select</span>(DEATH_EVENT, variable, categoria, n, porcentaje)</span></code></pre></div>
+<pre><code>## # A tibble: 4 × 5
+## # Groups:   DEATH_EVENT [2]
+##   DEATH_EVENT variable categoria     n porcentaje
+##         &lt;dbl&gt; &lt;chr&gt;        &lt;dbl&gt; &lt;int&gt;      &lt;dbl&gt;
+## 1           0 Sexo             0    71       35.0
+## 2           0 Sexo             1   132       65.0
+## 3           1 Sexo             0    34       35.4
+## 4           1 Sexo             1    62       64.6</code></pre>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="análisis-exploratorio-de-datos-eda.html#cb54-1" tabindex="-1"></a>datos <span class="sc">%&gt;%</span></span>
+<span id="cb54-2"><a href="análisis-exploratorio-de-datos-eda.html#cb54-2" tabindex="-1"></a>  <span class="fu">group_by</span>(DEATH_EVENT) <span class="sc">%&gt;%</span></span>
+<span id="cb54-3"><a href="análisis-exploratorio-de-datos-eda.html#cb54-3" tabindex="-1"></a>  <span class="fu">count</span>(smoking, <span class="at">name =</span> <span class="st">&quot;n&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb54-4"><a href="análisis-exploratorio-de-datos-eda.html#cb54-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">categoria =</span> smoking,</span>
+<span id="cb54-5"><a href="análisis-exploratorio-de-datos-eda.html#cb54-5" tabindex="-1"></a>         <span class="at">variable =</span> <span class="st">&quot;Smoking&quot;</span>,</span>
+<span id="cb54-6"><a href="análisis-exploratorio-de-datos-eda.html#cb54-6" tabindex="-1"></a>         <span class="at">porcentaje =</span> (n <span class="sc">/</span> <span class="fu">sum</span>(n)) <span class="sc">*</span> <span class="dv">100</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb54-7"><a href="análisis-exploratorio-de-datos-eda.html#cb54-7" tabindex="-1"></a>  <span class="fu">select</span>(DEATH_EVENT, variable, categoria, n, porcentaje)</span></code></pre></div>
+<pre><code>## # A tibble: 4 × 5
+## # Groups:   DEATH_EVENT [2]
+##   DEATH_EVENT variable categoria     n porcentaje
+##         &lt;dbl&gt; &lt;chr&gt;        &lt;dbl&gt; &lt;int&gt;      &lt;dbl&gt;
+## 1           0 Smoking          0   137       67.5
+## 2           0 Smoking          1    66       32.5
+## 3           1 Smoking          0    66       68.8
+## 4           1 Smoking          1    30       31.2</code></pre>
+<ul>
+<li>Gráficas: barras agrupadas</li>
+</ul>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="análisis-exploratorio-de-datos-eda.html#cb56-1" tabindex="-1"></a>datos_plot_anemia <span class="ot">&lt;-</span> datos <span class="sc">%&gt;%</span></span>
+<span id="cb56-2"><a href="análisis-exploratorio-de-datos-eda.html#cb56-2" tabindex="-1"></a>  <span class="fu">group_by</span>(DEATH_EVENT) <span class="sc">%&gt;%</span></span>
+<span id="cb56-3"><a href="análisis-exploratorio-de-datos-eda.html#cb56-3" tabindex="-1"></a>  <span class="fu">count</span>(anaemia, <span class="at">name =</span> <span class="st">&quot;n&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb56-4"><a href="análisis-exploratorio-de-datos-eda.html#cb56-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">categoria =</span> anaemia,</span>
+<span id="cb56-5"><a href="análisis-exploratorio-de-datos-eda.html#cb56-5" tabindex="-1"></a>         <span class="at">variable =</span> <span class="st">&quot;anaemia&quot;</span>,</span>
+<span id="cb56-6"><a href="análisis-exploratorio-de-datos-eda.html#cb56-6" tabindex="-1"></a>         <span class="at">porcentaje =</span> (n <span class="sc">/</span> <span class="fu">sum</span>(n)) <span class="sc">*</span> <span class="dv">100</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb56-7"><a href="análisis-exploratorio-de-datos-eda.html#cb56-7" tabindex="-1"></a>  <span class="fu">select</span>(DEATH_EVENT, categoria, n, porcentaje)</span>
+<span id="cb56-8"><a href="análisis-exploratorio-de-datos-eda.html#cb56-8" tabindex="-1"></a></span>
+<span id="cb56-9"><a href="análisis-exploratorio-de-datos-eda.html#cb56-9" tabindex="-1"></a>datos_plot_anemia <span class="sc">%&gt;%</span> </span>
+<span id="cb56-10"><a href="análisis-exploratorio-de-datos-eda.html#cb56-10" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">DEATH_EVENT =</span> <span class="fu">factor</span>(DEATH_EVENT, </span>
+<span id="cb56-11"><a href="análisis-exploratorio-de-datos-eda.html#cb56-11" tabindex="-1"></a>                              <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), </span>
+<span id="cb56-12"><a href="análisis-exploratorio-de-datos-eda.html#cb56-12" tabindex="-1"></a>                              <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;No murió&quot;</span>, <span class="st">&quot;Murió&quot;</span>))) <span class="sc">%&gt;%</span></span>
+<span id="cb56-13"><a href="análisis-exploratorio-de-datos-eda.html#cb56-13" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> categoria, <span class="at">y =</span> n, <span class="at">fill =</span> DEATH_EVENT)) <span class="sc">+</span></span>
+<span id="cb56-14"><a href="análisis-exploratorio-de-datos-eda.html#cb56-14" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&quot;identity&quot;</span>, <span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="at">width =</span> <span class="fl">0.9</span>)) <span class="sc">+</span></span>
+<span id="cb56-15"><a href="análisis-exploratorio-de-datos-eda.html#cb56-15" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">paste0</span>(n, <span class="st">&quot; (&quot;</span>, <span class="fu">round</span>(porcentaje, <span class="dv">1</span>), <span class="st">&quot;%)&quot;</span>)),</span>
+<span id="cb56-16"><a href="análisis-exploratorio-de-datos-eda.html#cb56-16" tabindex="-1"></a>            <span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="at">width =</span> <span class="fl">0.9</span>),</span>
+<span id="cb56-17"><a href="análisis-exploratorio-de-datos-eda.html#cb56-17" tabindex="-1"></a>            <span class="at">vjust =</span> <span class="sc">-</span><span class="fl">0.3</span>,</span>
+<span id="cb56-18"><a href="análisis-exploratorio-de-datos-eda.html#cb56-18" tabindex="-1"></a>            <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb56-19"><a href="análisis-exploratorio-de-datos-eda.html#cb56-19" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Pacientes con anemia&quot;</span>,</span>
+<span id="cb56-20"><a href="análisis-exploratorio-de-datos-eda.html#cb56-20" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&quot;Anemia&quot;</span>,</span>
+<span id="cb56-21"><a href="análisis-exploratorio-de-datos-eda.html#cb56-21" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Cantidad de pacientes&quot;</span></span>
+<span id="cb56-22"><a href="análisis-exploratorio-de-datos-eda.html#cb56-22" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb56-23"><a href="análisis-exploratorio-de-datos-eda.html#cb56-23" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb56-24"><a href="análisis-exploratorio-de-datos-eda.html#cb56-24" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">&quot;Set1&quot;</span>)</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-29-1.png" width="672" /></p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="análisis-exploratorio-de-datos-eda.html#cb57-1" tabindex="-1"></a>datos_plot_diabetes <span class="ot">&lt;-</span> datos <span class="sc">%&gt;%</span></span>
+<span id="cb57-2"><a href="análisis-exploratorio-de-datos-eda.html#cb57-2" tabindex="-1"></a>  <span class="fu">group_by</span>(DEATH_EVENT) <span class="sc">%&gt;%</span></span>
+<span id="cb57-3"><a href="análisis-exploratorio-de-datos-eda.html#cb57-3" tabindex="-1"></a>  <span class="fu">count</span>(diabetes, <span class="at">name =</span> <span class="st">&quot;n&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb57-4"><a href="análisis-exploratorio-de-datos-eda.html#cb57-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">categoria =</span> diabetes,</span>
+<span id="cb57-5"><a href="análisis-exploratorio-de-datos-eda.html#cb57-5" tabindex="-1"></a>         <span class="at">variable =</span> <span class="st">&quot;diabetes&quot;</span>,</span>
+<span id="cb57-6"><a href="análisis-exploratorio-de-datos-eda.html#cb57-6" tabindex="-1"></a>         <span class="at">porcentaje =</span> (n <span class="sc">/</span> <span class="fu">sum</span>(n)) <span class="sc">*</span> <span class="dv">100</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb57-7"><a href="análisis-exploratorio-de-datos-eda.html#cb57-7" tabindex="-1"></a>  <span class="fu">select</span>(DEATH_EVENT, categoria, n, porcentaje)</span>
+<span id="cb57-8"><a href="análisis-exploratorio-de-datos-eda.html#cb57-8" tabindex="-1"></a></span>
+<span id="cb57-9"><a href="análisis-exploratorio-de-datos-eda.html#cb57-9" tabindex="-1"></a>datos_plot_diabetes <span class="sc">%&gt;%</span> </span>
+<span id="cb57-10"><a href="análisis-exploratorio-de-datos-eda.html#cb57-10" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">DEATH_EVENT =</span> <span class="fu">factor</span>(DEATH_EVENT, </span>
+<span id="cb57-11"><a href="análisis-exploratorio-de-datos-eda.html#cb57-11" tabindex="-1"></a>                              <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), </span>
+<span id="cb57-12"><a href="análisis-exploratorio-de-datos-eda.html#cb57-12" tabindex="-1"></a>                              <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;No murió&quot;</span>, <span class="st">&quot;Murió&quot;</span>))) <span class="sc">%&gt;%</span></span>
+<span id="cb57-13"><a href="análisis-exploratorio-de-datos-eda.html#cb57-13" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> categoria, <span class="at">y =</span> n, <span class="at">fill =</span> DEATH_EVENT)) <span class="sc">+</span></span>
+<span id="cb57-14"><a href="análisis-exploratorio-de-datos-eda.html#cb57-14" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&quot;identity&quot;</span>, <span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="at">width =</span> <span class="fl">0.9</span>)) <span class="sc">+</span></span>
+<span id="cb57-15"><a href="análisis-exploratorio-de-datos-eda.html#cb57-15" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">paste0</span>(n, <span class="st">&quot; (&quot;</span>, <span class="fu">round</span>(porcentaje, <span class="dv">1</span>), <span class="st">&quot;%)&quot;</span>)),</span>
+<span id="cb57-16"><a href="análisis-exploratorio-de-datos-eda.html#cb57-16" tabindex="-1"></a>            <span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="at">width =</span> <span class="fl">0.9</span>),</span>
+<span id="cb57-17"><a href="análisis-exploratorio-de-datos-eda.html#cb57-17" tabindex="-1"></a>            <span class="at">vjust =</span> <span class="sc">-</span><span class="fl">0.3</span>,</span>
+<span id="cb57-18"><a href="análisis-exploratorio-de-datos-eda.html#cb57-18" tabindex="-1"></a>            <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb57-19"><a href="análisis-exploratorio-de-datos-eda.html#cb57-19" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Pacientes con diabetes&quot;</span>,</span>
+<span id="cb57-20"><a href="análisis-exploratorio-de-datos-eda.html#cb57-20" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&quot;Diabetes&quot;</span>,</span>
+<span id="cb57-21"><a href="análisis-exploratorio-de-datos-eda.html#cb57-21" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Cantidad de pacientes&quot;</span></span>
+<span id="cb57-22"><a href="análisis-exploratorio-de-datos-eda.html#cb57-22" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb57-23"><a href="análisis-exploratorio-de-datos-eda.html#cb57-23" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb57-24"><a href="análisis-exploratorio-de-datos-eda.html#cb57-24" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">&quot;Set1&quot;</span>)</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-29-2.png" width="672" /></p>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="análisis-exploratorio-de-datos-eda.html#cb58-1" tabindex="-1"></a>datos_plot_hbp <span class="ot">&lt;-</span> datos <span class="sc">%&gt;%</span></span>
+<span id="cb58-2"><a href="análisis-exploratorio-de-datos-eda.html#cb58-2" tabindex="-1"></a>  <span class="fu">group_by</span>(DEATH_EVENT) <span class="sc">%&gt;%</span></span>
+<span id="cb58-3"><a href="análisis-exploratorio-de-datos-eda.html#cb58-3" tabindex="-1"></a>  <span class="fu">count</span>(high_blood_pressure, <span class="at">name =</span> <span class="st">&quot;n&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb58-4"><a href="análisis-exploratorio-de-datos-eda.html#cb58-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">categoria =</span> high_blood_pressure,</span>
+<span id="cb58-5"><a href="análisis-exploratorio-de-datos-eda.html#cb58-5" tabindex="-1"></a>         <span class="at">variable =</span> <span class="st">&quot;high_blood_pressure&quot;</span>,</span>
+<span id="cb58-6"><a href="análisis-exploratorio-de-datos-eda.html#cb58-6" tabindex="-1"></a>         <span class="at">porcentaje =</span> (n <span class="sc">/</span> <span class="fu">sum</span>(n)) <span class="sc">*</span> <span class="dv">100</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb58-7"><a href="análisis-exploratorio-de-datos-eda.html#cb58-7" tabindex="-1"></a>  <span class="fu">select</span>(DEATH_EVENT, categoria, n, porcentaje)</span>
+<span id="cb58-8"><a href="análisis-exploratorio-de-datos-eda.html#cb58-8" tabindex="-1"></a></span>
+<span id="cb58-9"><a href="análisis-exploratorio-de-datos-eda.html#cb58-9" tabindex="-1"></a>datos_plot_hbp <span class="sc">%&gt;%</span> </span>
+<span id="cb58-10"><a href="análisis-exploratorio-de-datos-eda.html#cb58-10" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">DEATH_EVENT =</span> <span class="fu">factor</span>(DEATH_EVENT, </span>
+<span id="cb58-11"><a href="análisis-exploratorio-de-datos-eda.html#cb58-11" tabindex="-1"></a>                              <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), </span>
+<span id="cb58-12"><a href="análisis-exploratorio-de-datos-eda.html#cb58-12" tabindex="-1"></a>                              <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;No murió&quot;</span>, <span class="st">&quot;Murió&quot;</span>))) <span class="sc">%&gt;%</span></span>
+<span id="cb58-13"><a href="análisis-exploratorio-de-datos-eda.html#cb58-13" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> categoria, <span class="at">y =</span> n, <span class="at">fill =</span> DEATH_EVENT)) <span class="sc">+</span></span>
+<span id="cb58-14"><a href="análisis-exploratorio-de-datos-eda.html#cb58-14" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&quot;identity&quot;</span>, <span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="at">width =</span> <span class="fl">0.9</span>)) <span class="sc">+</span></span>
+<span id="cb58-15"><a href="análisis-exploratorio-de-datos-eda.html#cb58-15" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">paste0</span>(n, <span class="st">&quot; (&quot;</span>, <span class="fu">round</span>(porcentaje, <span class="dv">1</span>), <span class="st">&quot;%)&quot;</span>)),</span>
+<span id="cb58-16"><a href="análisis-exploratorio-de-datos-eda.html#cb58-16" tabindex="-1"></a>            <span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="at">width =</span> <span class="fl">0.9</span>),</span>
+<span id="cb58-17"><a href="análisis-exploratorio-de-datos-eda.html#cb58-17" tabindex="-1"></a>            <span class="at">vjust =</span> <span class="sc">-</span><span class="fl">0.3</span>,</span>
+<span id="cb58-18"><a href="análisis-exploratorio-de-datos-eda.html#cb58-18" tabindex="-1"></a>            <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb58-19"><a href="análisis-exploratorio-de-datos-eda.html#cb58-19" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Pacientes con presión alta&quot;</span>,</span>
+<span id="cb58-20"><a href="análisis-exploratorio-de-datos-eda.html#cb58-20" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&quot;Presión alta&quot;</span>,</span>
+<span id="cb58-21"><a href="análisis-exploratorio-de-datos-eda.html#cb58-21" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Cantidad de pacientes&quot;</span></span>
+<span id="cb58-22"><a href="análisis-exploratorio-de-datos-eda.html#cb58-22" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb58-23"><a href="análisis-exploratorio-de-datos-eda.html#cb58-23" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb58-24"><a href="análisis-exploratorio-de-datos-eda.html#cb58-24" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">&quot;Set1&quot;</span>)</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-29-3.png" width="672" /></p>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="análisis-exploratorio-de-datos-eda.html#cb59-1" tabindex="-1"></a>datos_plot_sex <span class="ot">&lt;-</span> datos <span class="sc">%&gt;%</span></span>
+<span id="cb59-2"><a href="análisis-exploratorio-de-datos-eda.html#cb59-2" tabindex="-1"></a>  <span class="fu">group_by</span>(DEATH_EVENT) <span class="sc">%&gt;%</span></span>
+<span id="cb59-3"><a href="análisis-exploratorio-de-datos-eda.html#cb59-3" tabindex="-1"></a>  <span class="fu">count</span>(sex, <span class="at">name =</span> <span class="st">&quot;n&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb59-4"><a href="análisis-exploratorio-de-datos-eda.html#cb59-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">categoria =</span> sex,</span>
+<span id="cb59-5"><a href="análisis-exploratorio-de-datos-eda.html#cb59-5" tabindex="-1"></a>         <span class="at">variable =</span> <span class="st">&quot;sex&quot;</span>,</span>
+<span id="cb59-6"><a href="análisis-exploratorio-de-datos-eda.html#cb59-6" tabindex="-1"></a>         <span class="at">porcentaje =</span> (n <span class="sc">/</span> <span class="fu">sum</span>(n)) <span class="sc">*</span> <span class="dv">100</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb59-7"><a href="análisis-exploratorio-de-datos-eda.html#cb59-7" tabindex="-1"></a>  <span class="fu">select</span>(DEATH_EVENT, categoria, n, porcentaje)</span>
+<span id="cb59-8"><a href="análisis-exploratorio-de-datos-eda.html#cb59-8" tabindex="-1"></a></span>
+<span id="cb59-9"><a href="análisis-exploratorio-de-datos-eda.html#cb59-9" tabindex="-1"></a>datos_plot_hbp <span class="sc">%&gt;%</span> </span>
+<span id="cb59-10"><a href="análisis-exploratorio-de-datos-eda.html#cb59-10" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">DEATH_EVENT =</span> <span class="fu">factor</span>(DEATH_EVENT, </span>
+<span id="cb59-11"><a href="análisis-exploratorio-de-datos-eda.html#cb59-11" tabindex="-1"></a>                              <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), </span>
+<span id="cb59-12"><a href="análisis-exploratorio-de-datos-eda.html#cb59-12" tabindex="-1"></a>                              <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;No murió&quot;</span>, <span class="st">&quot;Murió&quot;</span>))) <span class="sc">%&gt;%</span></span>
+<span id="cb59-13"><a href="análisis-exploratorio-de-datos-eda.html#cb59-13" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> categoria, <span class="at">y =</span> n, <span class="at">fill =</span> DEATH_EVENT)) <span class="sc">+</span></span>
+<span id="cb59-14"><a href="análisis-exploratorio-de-datos-eda.html#cb59-14" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&quot;identity&quot;</span>, <span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="at">width =</span> <span class="fl">0.9</span>)) <span class="sc">+</span></span>
+<span id="cb59-15"><a href="análisis-exploratorio-de-datos-eda.html#cb59-15" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">paste0</span>(n, <span class="st">&quot; (&quot;</span>, <span class="fu">round</span>(porcentaje, <span class="dv">1</span>), <span class="st">&quot;%)&quot;</span>)),</span>
+<span id="cb59-16"><a href="análisis-exploratorio-de-datos-eda.html#cb59-16" tabindex="-1"></a>            <span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="at">width =</span> <span class="fl">0.9</span>),</span>
+<span id="cb59-17"><a href="análisis-exploratorio-de-datos-eda.html#cb59-17" tabindex="-1"></a>            <span class="at">vjust =</span> <span class="sc">-</span><span class="fl">0.3</span>,</span>
+<span id="cb59-18"><a href="análisis-exploratorio-de-datos-eda.html#cb59-18" tabindex="-1"></a>            <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb59-19"><a href="análisis-exploratorio-de-datos-eda.html#cb59-19" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Sexo de pacientes&quot;</span>,</span>
+<span id="cb59-20"><a href="análisis-exploratorio-de-datos-eda.html#cb59-20" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&quot;Sexo&quot;</span>,</span>
+<span id="cb59-21"><a href="análisis-exploratorio-de-datos-eda.html#cb59-21" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Cantidad de pacientes&quot;</span></span>
+<span id="cb59-22"><a href="análisis-exploratorio-de-datos-eda.html#cb59-22" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb59-23"><a href="análisis-exploratorio-de-datos-eda.html#cb59-23" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb59-24"><a href="análisis-exploratorio-de-datos-eda.html#cb59-24" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">&quot;Set1&quot;</span>)</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-29-4.png" width="672" /></p>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="análisis-exploratorio-de-datos-eda.html#cb60-1" tabindex="-1"></a>datos_plot_smoking <span class="ot">&lt;-</span> datos <span class="sc">%&gt;%</span></span>
+<span id="cb60-2"><a href="análisis-exploratorio-de-datos-eda.html#cb60-2" tabindex="-1"></a>  <span class="fu">group_by</span>(DEATH_EVENT) <span class="sc">%&gt;%</span></span>
+<span id="cb60-3"><a href="análisis-exploratorio-de-datos-eda.html#cb60-3" tabindex="-1"></a>  <span class="fu">count</span>(smoking, <span class="at">name =</span> <span class="st">&quot;n&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb60-4"><a href="análisis-exploratorio-de-datos-eda.html#cb60-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">categoria =</span> smoking,</span>
+<span id="cb60-5"><a href="análisis-exploratorio-de-datos-eda.html#cb60-5" tabindex="-1"></a>         <span class="at">variable =</span> <span class="st">&quot;smoking&quot;</span>,</span>
+<span id="cb60-6"><a href="análisis-exploratorio-de-datos-eda.html#cb60-6" tabindex="-1"></a>         <span class="at">porcentaje =</span> (n <span class="sc">/</span> <span class="fu">sum</span>(n)) <span class="sc">*</span> <span class="dv">100</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb60-7"><a href="análisis-exploratorio-de-datos-eda.html#cb60-7" tabindex="-1"></a>  <span class="fu">select</span>(DEATH_EVENT, categoria, n, porcentaje)</span>
+<span id="cb60-8"><a href="análisis-exploratorio-de-datos-eda.html#cb60-8" tabindex="-1"></a></span>
+<span id="cb60-9"><a href="análisis-exploratorio-de-datos-eda.html#cb60-9" tabindex="-1"></a>datos_plot_smoking <span class="sc">%&gt;%</span> </span>
+<span id="cb60-10"><a href="análisis-exploratorio-de-datos-eda.html#cb60-10" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">DEATH_EVENT =</span> <span class="fu">factor</span>(DEATH_EVENT, </span>
+<span id="cb60-11"><a href="análisis-exploratorio-de-datos-eda.html#cb60-11" tabindex="-1"></a>                              <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), </span>
+<span id="cb60-12"><a href="análisis-exploratorio-de-datos-eda.html#cb60-12" tabindex="-1"></a>                              <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;No murió&quot;</span>, <span class="st">&quot;Murió&quot;</span>))) <span class="sc">%&gt;%</span></span>
+<span id="cb60-13"><a href="análisis-exploratorio-de-datos-eda.html#cb60-13" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> categoria, <span class="at">y =</span> n, <span class="at">fill =</span> DEATH_EVENT)) <span class="sc">+</span></span>
+<span id="cb60-14"><a href="análisis-exploratorio-de-datos-eda.html#cb60-14" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&quot;identity&quot;</span>, <span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="at">width =</span> <span class="fl">0.9</span>)) <span class="sc">+</span></span>
+<span id="cb60-15"><a href="análisis-exploratorio-de-datos-eda.html#cb60-15" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">paste0</span>(n, <span class="st">&quot; (&quot;</span>, <span class="fu">round</span>(porcentaje, <span class="dv">1</span>), <span class="st">&quot;%)&quot;</span>)),</span>
+<span id="cb60-16"><a href="análisis-exploratorio-de-datos-eda.html#cb60-16" tabindex="-1"></a>            <span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="at">width =</span> <span class="fl">0.9</span>),</span>
+<span id="cb60-17"><a href="análisis-exploratorio-de-datos-eda.html#cb60-17" tabindex="-1"></a>            <span class="at">vjust =</span> <span class="sc">-</span><span class="fl">0.3</span>,</span>
+<span id="cb60-18"><a href="análisis-exploratorio-de-datos-eda.html#cb60-18" tabindex="-1"></a>            <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb60-19"><a href="análisis-exploratorio-de-datos-eda.html#cb60-19" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Pacientes fumadores&quot;</span>,</span>
+<span id="cb60-20"><a href="análisis-exploratorio-de-datos-eda.html#cb60-20" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&quot;Smoking&quot;</span>,</span>
+<span id="cb60-21"><a href="análisis-exploratorio-de-datos-eda.html#cb60-21" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Cantidad de pacientes&quot;</span></span>
+<span id="cb60-22"><a href="análisis-exploratorio-de-datos-eda.html#cb60-22" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb60-23"><a href="análisis-exploratorio-de-datos-eda.html#cb60-23" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb60-24"><a href="análisis-exploratorio-de-datos-eda.html#cb60-24" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">&quot;Set1&quot;</span>)</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-29-5.png" width="672" /></p>
 
 </div>
 </div>
