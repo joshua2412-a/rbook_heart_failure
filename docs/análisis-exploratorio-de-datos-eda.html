@@ -23,7 +23,7 @@
 <meta name="author" content="Alejandro Cantillo, Joshua Hincapie y Rafael Romero." />
 
 
-<meta name="date" content="2025-08-10" />
+<meta name="date" content="2025-08-11" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -198,6 +198,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><p><strong>time (días):</strong> Periodo de seguimiento.</p></li>
 <li><p><strong>DEATH_EVENT (lógica):</strong> Pacientes muertos o vivos (<code>Target</code>).</p></li>
 </ul>
+<p>El conjunto de datos clínicos cuenta con variables numéricas y categóricas, de las cuales algunas son binarias con <code>0 = False</code> y <code>1 = True</code>.</p>
 </div>
 <div id="extracción-transformación-y-carga-etl" class="section level2 hasAnchor" number="3.2">
 <h2><span class="header-section-number">3.2</span> Extracción, transformación y carga (ETL)<a href="#extracci%C3%B3n-transformaci%C3%B3n-y-carga-etl" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -366,6 +367,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb25-7"><a href="análisis-exploratorio-de-datos-eda.html#cb25-7" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;skyblue&quot;</span>, <span class="st">&quot;tomato&quot;</span>),</span>
 <span id="cb25-8"><a href="análisis-exploratorio-de-datos-eda.html#cb25-8" tabindex="-1"></a>                    <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;0&quot;</span> <span class="ot">=</span> <span class="st">&quot;Sobreviviente&quot;</span>, <span class="st">&quot;1&quot;</span> <span class="ot">=</span> <span class="st">&quot;Muerte&quot;</span>))</span></code></pre></div>
 <p><img src="bookdown-demo_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<p>El gráfico de barras y de torta dan un primer vistazo claro de la distribución de la mortalidad tanto en frecuencia absoluta como proporción relativa, evidenciando un desbalance entre fallecidos y sobrevivientes donde la mayoría de los pacientes sobrevivieron. Específicamente, el <strong>67,9%</strong> de los pacientes (<strong>203</strong> personas) sobrevivió (<code>0</code>), mientras que el <strong>32,1%</strong> (<strong>96</strong> personas) falleció (<code>1</code>). Esto implica que en la muestra estudiada la tasa de mortalidad es cercana a un tercio, lo cual representa una fracción significativa de la población estudiada. Este resultado puede ser un indicador relevante para profundizar en el análisis de las variables clínicas asociadas a la mortalidad para identificar factores de riesgo.</p>
 </div>
 <div id="análisis-de-las-variables-características-independientes" class="section level2 hasAnchor" number="3.4">
 <h2><span class="header-section-number">3.4</span> Análisis de las variables características (independientes)<a href="#an%C3%A1lisis-de-las-variables-caracter%C3%ADsticas-independientes" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -475,6 +477,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 5 serum_creat…   299 1.39e0 1.03e0  1.1 e0     0.5 9.4 e0 9   e-1 1.4 e0     0.5
 ## 6 serum_sodium   299 1.37e2 4.41e0  1.37e2   113   1.48e2 1.34e+2 1.4 e2     6  
 ## 7 time           299 1.30e2 7.76e1  1.15e2     4   2.85e2 7.3 e+1 2.03e2   130</code></pre>
+<p>El análisis estadístico de las variables numéricas revela características claves de los pacientes durante su seguimiento. La edad promedio es <strong>60,8</strong> años (DS = <strong>11,9</strong> años) y un rango de <strong>40</strong> a <strong>95</strong> años (Q1 = <strong>51</strong>, Mediana = <strong>60</strong>, Q3 = <strong>70</strong>), lo que indica que la población está compuesta mayoritariamente por adultos de mediana edad y mayores, con dispersión moderada. La creatinina-fosfoquinasa (CPK) presenta un promedio de <strong>581,84</strong> µg/L (DS = <strong>970,3</strong> µg/L), con un rango de <strong>23</strong> a <strong>7861</strong> y una mediana de <strong>250</strong> µg/L, lo cual indica una alta dispersión en los datos, discrepancia entre la media y la mediana, y la presencia de valores extremos que sesgan la distribución, señalando una asimetría positiva. La fracción de eyección posee una media de <strong>38,1%</strong> (DS = <strong>11,8%</strong>), mediana <strong>38%</strong> y rango <strong>14-80%</strong>, con un <strong>75%</strong> de las observaciones por debajo de <strong>45% FE</strong>, lo que sugiere que una gran parte de los pacientes presenta FE baja (<strong>≤40%</strong>) indicando disfunción sistólica significativa, que es clínicamente relevante y se asocia a un peor pronóstico. En las plaquetas, se observa una media de <strong>263358</strong> plaquetas en sangre (DS = <strong>97804</strong>), mediana igual a 262000 plaquetas y rango <strong>25100-850000</strong>, indicando también variabilidad considerable y algunos valores extremos. La creatinina sérica presenta media <strong>1,4</strong> mg/dL (DS = <strong>1,03</strong> mg/dL), mediana <strong>1,1</strong> mg/dL y rango <strong>0,5-9,4</strong> mg/dL, esto sugiere que la mayoría de los pacientes tiene valores normales de creatinina sérica, sin embargo, hay algunos valores extremos que representan un subgrupo con insuficiencia renal significativa que puede influir en la mortalidad. En el sodio sérico se observa una media de <strong>136,6</strong> mEq/L (DS = <strong>4,4</strong> mEq/L), mediana de <strong>137</strong> mEq/L y rango <strong>113-148</strong> mEq/L , presenta poca variabilidad y datos clínicamente normales. El tiempo de seguimiento presenta media <strong>130</strong> días (DS = <strong>77,6</strong> días), mediana de <strong>115</strong> días y rango <strong>4-285</strong> días, reflejando heterogeneidad en el periodo de observación de los pacientes.</p>
 <ul>
 <li>Gráficos</li>
 </ul>
