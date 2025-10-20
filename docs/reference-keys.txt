@@ -33,3 +33,11 @@ death_event-vs-diabetes
 death_event-vs-high_blood_pressure
 death_event-vs-sex
 death_event-vs-smoking
+análisis-de-estadística-paramétrica-y-no-paramétrica-1
+tablas-de-contingencia-variable-objetivo-vs-variables-categóricas-1
+analisis
+anslisis-1
+comparación-de-medias
+comparacion
+comparacion-de-medias
+tablas-de-contingencia
